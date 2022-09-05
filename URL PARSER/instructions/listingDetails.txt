@@ -1,0 +1,30 @@
+class UrlService
+
+class BuyRentSold      
+      - get search result page url
+      - get listing detail page url
+
+class AuctionResults
+
+class SuburbProfile
+
+
+
+https://www.realestateview.com.au/real-estate/13-canungra-road-city-beach-wa/property-details-buy-residential-14289642/
+
+getListingDataFromUrl
+{
+      saleMethod: buy|rent|sold,
+      listingId:12123213,
+      slug:""
+      state:""
+}
+
+getUrlFromListingData
+{
+      saleMethod: buy|rent|sold,
+      listingId:12123213,
+      address:"13/12-11 Canungra Road",
+      suburb:"richmond",
+      state:"wa"
+}

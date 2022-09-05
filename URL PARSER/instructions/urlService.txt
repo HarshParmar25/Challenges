@@ -1,0 +1,62 @@
+https://resi.uatz.view.com.au/
+
+{
+    "saleMethod":"buy|rent|sold"
+    "state":"vic",
+    "suburb":"richmond",
+    "region":"",
+    "postcode":3121,
+    "minPrice":1212,
+    "maxPrice":23232,
+    "bedrooms":2,
+    "propertyTypes":["house","apartment"]
+}
+
+only state
+https://resi.uatz.view.com.au/for-sale/in-vic/
+
+with suburb 
+https://resi.uatz.view.com.au/for-sale/in-vic-richmond-3121/
+
+with city or region (doesn't have area code)
+https://resi.uatz.view.com.au/for-sale/in-nsw-st-george/
+
+min price 
+https://resi.uatz.view.com.au/for-sale/in-vic-richmond-3121-from-75000/
+
+maxPrice
+https://resi.uatz.view.com.au/for-sale/in-vic-richmond-3121-up-to-100000/
+
+price range
+https://resi.uatz.view.com.au/for-sale/in-vic-richmond-3121-between-50000-and-100000/
+
+with bedrooms
+https://resi.uatz.view.com.au/for-sale/in-vic-richmond-3121-with-1-bedroom-between-50000-and-100000/
+
+propertyTypes
+https://resi.uatz.view.com.au/for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-between-50000-and-100000/
+
+=> studios-and-townhouses-and-villas
+
+bathrooms and carparking(query params)
+https://resi.uatz.view.com.au/for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-between-50000-and-100000/?bathrooms=2&cars=1
+
+
+
+
+
+  constructor(saleMethod, state, suburb, region, postcode, minPrice, maxPrice, bedrooms, propertyTypes = []) {
+    (this.saleMethod = saleMethod),
+      (this.state = state),
+      (this.suburb = suburb),
+      (this.region = region),
+      (this.postcode = postcode),
+      (this.minPrice = minPrice),
+      (this.maxPrice = maxPrice),
+      (this.bedrooms = bedrooms),
+      (this.propertyTypes = propertyTypes);
+  }
+
+  static getParsedData(saleMethod, state, suburb, region, postcode, minPrice, maxPrice, bedrooms, propertyTypes) {
+    return new UrlParse(saleMethod, state, suburb, region, postcode, minPrice, maxPrice, bedrooms, propertyTypes);
+  }
