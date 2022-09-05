@@ -1,11 +1,4 @@
-const url0 = `https://resi.uatz.view.com.au/for-sale/in-vic-between-20-and-50/`;
-const url1 = `https://resi.uatz.view.com.au/sold-properties/studios-and-townhouses-and-villas-in-vic-richmond-ahme-with-1-bedroom-between-50000-and-100000/`;
-const url2 = `https://resi.uatz.view.com.au/for-rent/in-nsw-attunga-2345/`;
-const url3 = "https://resi.uatz.view.com.au/for-sale/in-wa-city-beach-6015-up-to-50000/";
-const url4 = "https://resi.uatz.view.com.au/for-rent/in-wa-city-beach-6015-from-1200-per-week/";
-const url5 = `https://resi.uatz.view.com.au/for-rent/studios-and-townhouses-and-villas-in-vic-richmond-ahme-3121-with-1-bedroom-between-5000-and-100000-per-week/`;
-const url6 = `https://resi.uatz.view.com.au/for-rent/in-nsw-attunga/`;
-const url7 = `https://resi.uatz.view.com.au/for-sale/houses-and-units-and-apartments-and-studios-and-townhouses-and-land-and-villas-and-rural-in-vic-melbourne-with-3-bedrooms-between-50000-and-75000/`;
+const CaseChange = require("../modules/caseChange.js");
 
 class UrlService {
   static getSaleMethod(url) {
@@ -73,14 +66,19 @@ class UrlService {
 
   static getDataFromUrl(url) {
     const data = url.split("/" || "/?").splice(3);
-    const saleMethod = UrlService.getSaleMethod(data[0]);
-    const propertyTypes = UrlService.getPropertyTypes(data[1]);
-    propertyTypes
+    let saleMethod = UrlService.getSaleMethod(data[0]);
+    let propertyTypes = UrlService.getPropertyTypes(data[1]);
     const bedrooms = UrlService.getBedrooms(data[1]);
     let { minPrice, maxPrice } = UrlService.getPriceFilter(data[1]);
-    const { state, postalCode, suburb, region } = UrlService.getArea(data[1]);
+    let { state, postalCode, suburb, region } = UrlService.getArea(data[1]);
     if (minPrice) minPrice = parseFloat(minPrice);
     if (maxPrice) maxPrice = parseFloat(maxPrice);
+
+    saleMethod = CaseChange.toUpperCase(saleMethod);
+    propertyTypes = CaseChange.toUpperCaseDataset(propertyTypes);
+    state = CaseChange.toUpperCase(state);
+    suburb = CaseChange.toUpperCase(suburb);
+    region = CaseChange.toUpperCase(region);
     return { saleMethod, state, suburb, postalCode, region, minPrice, maxPrice, propertyTypes, bedrooms };
   }
 
@@ -95,7 +93,7 @@ class UrlService {
       priceFilter = `-up-to-${maxPrice}`;
     }
 
-    if (saleMethod === "rent" && priceFilter) {
+    if (saleMethod.toLowerCase() === "rent" && priceFilter) {
       return `${priceFilter}-per-week`;
     }
     return priceFilter;
@@ -109,13 +107,16 @@ class UrlService {
   }
 
   static getPropertyTypesUrl(data) {
-    const { propertyTypes } = data;
+    let { propertyTypes } = data;
+    propertyTypes = CaseChange.toLowerCaseDataset(propertyTypes);
     if (propertyTypes.length === 0) return "";
     return propertyTypes.reduce((previousType, currentType) => `${previousType}-and-${currentType}`) + "-";
   }
 
   static getAreaUrl(data) {
-    const { suburb, postalCode, region } = data;
+    let { suburb, postalCode, region } = data;
+    suburb = CaseChange.toLowerCase(suburb);
+    region = CaseChange.toLowerCase(region);
     let area = "";
     if (!region && !postalCode && !suburb) return area;
     region !== "" ? (area = `-${region}`) : (area = `-${suburb}-${postalCode}`);
@@ -123,14 +124,16 @@ class UrlService {
   }
 
   static getSaleMethodUrl(data) {
-    const { saleMethod } = data;
+    let { saleMethod } = data;
+    saleMethod = CaseChange.toLowerCase(saleMethod);
     if (saleMethod === "sale") return "for-sale";
     if (saleMethod === "rent") return "for-rent";
     if (saleMethod === "sold") return "sold-properties";
   }
 
   static getUrlFromData(data) {
-    const { state } = data;
+    let { state } = data;
+    state = CaseChange.toLowerCase(state);
     const baseUrl = `https://resi.uatz.view.com.au/`;
 
     const priceFilter = this.getPriceFilterUrl(data);
@@ -142,11 +145,5 @@ class UrlService {
     return `${baseUrl}${saleMethodUrl}/${propertyTypesUrl}in-${state}${area}${totalBedrooms}${priceFilter}/`;
   }
 }
-const testUrl = url5;
-const result = UrlService.getDataFromUrl(testUrl);
-result;
-
-const urlFromData = UrlService.getUrlFromData(result);
-urlFromData;
 
 module.exports = UrlService;

@@ -1,8 +1,11 @@
-const url1 = `https://www.realestateview.com.au/rental-properties/1312-11-canungra-road-city-beach-wa/property-details-rent-residential-14289682/`;
+const CaseChange = require("../modules/caseChange.js");
+
 class Listing {
   static getArea(url) {
     let slug = url.split("/").splice(4, 1).join();
     let state = slug.split("-").splice(-1).join();
+    slug = CaseChange.toUpperCase(slug);
+    state = CaseChange.toUpperCase(state);
     return { slug, state };
   }
 
@@ -19,22 +22,24 @@ class Listing {
   }
 
   static getListingDataFromUrl(url) {
-    const saleMethod = this.getSaleMethod(url);
+    let saleMethod = this.getSaleMethod(url);
     const listingId = this.getlistingId(url);
-    const { slug, state } = this.getArea(url);
+    let { slug, state } = this.getArea(url);
+    saleMethod = CaseChange.toUpperCase(saleMethod);
     return { saleMethod, listingId, slug, state };
   }
 
   static getUrlFromListingData({ saleMethod, listingId, address, suburb, state }) {
+    saleMethod = CaseChange.toLowerCase(saleMethod);
+    address = CaseChange.toLowerCase(address);
+    suburb = CaseChange.toLowerCase(suburb);
+    state = CaseChange.toLowerCase(state);
     let baseUrl = `https://www.realestateview.com.au/real-estate/`;
     if (saleMethod === "rent") baseUrl = `https://www.realestateview.com.au/rental-properties/`;
     let slug = `${address}-${suburb}-${state}`.replace(/\/|\s/g, "-");
     return `${baseUrl}${slug}/property-details-${saleMethod}-residential-${listingId}/`;
   }
 }
-
-const res = Listing.getListingDataFromUrl(url1)
-res
 
 module.exports = Listing;
 

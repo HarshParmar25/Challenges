@@ -8,10 +8,10 @@ describe("Get Listing Details From Url", () => {
         `https://www.realestateview.com.au/real-estate/13-canungra-road-city-beach-wa/property-details-buy-residential-14289642/`
       )
     ).toEqual({
-      saleMethod: "buy",
+      saleMethod: "Buy",
       listingId: 14289642,
-      slug: "13-canungra-road-city-beach-wa",
-      state: "wa",
+      slug: "13 Canungra Road City Beach Wa",
+      state: "Wa",
     });
   });
 
@@ -20,7 +20,7 @@ describe("Get Listing Details From Url", () => {
       Listing.getListingDataFromUrl(
         `https://www.realestateview.com.au/real-estate/3-jubilee-crescent-city-beach-wa/property-details-sold-residential-14160030/`
       )
-    ).toEqual({ saleMethod: "sold", listingId: 14160030, slug: "3-jubilee-crescent-city-beach-wa", state: "wa" });
+    ).toEqual({ saleMethod: "Sold", listingId: 14160030, slug: "3 Jubilee Crescent City Beach Wa", state: "Wa" });
   });
 
   test("https://www.realestateview.com.au/rental-properties/38-maloney-way-city-beach-wa/property-details-rent-residential-14202736/", () => {
@@ -28,7 +28,7 @@ describe("Get Listing Details From Url", () => {
       Listing.getListingDataFromUrl(
         `https://www.realestateview.com.au/rental-properties/38-maloney-way-city-beach-wa/property-details-rent-residential-14202736/`
       )
-    ).toEqual({ saleMethod: "rent", listingId: 14202736, slug: "38-maloney-way-city-beach-wa", state: "wa" });
+    ).toEqual({ saleMethod: "Rent", listingId: 14202736, slug: "38 Maloney Way City Beach Wa", state: "Wa" });
   });
 });
 
@@ -42,11 +42,11 @@ describe("Get Url From Listing Details", () => {
 }`, () => {
     expect(
       Listing.getUrlFromListingData({
-        saleMethod: "buy",
+        saleMethod: "Buy",
         listingId: 14289642,
-        address: "13/12-11 canungra road",
-        suburb: "city-beach",
-        state: "wa",
+        address: "13/12-11 Canungra Road",
+        suburb: "City Beach",
+        state: "Wa",
       })
     ).toEqual(
       `https://www.realestateview.com.au/real-estate/13-12-11-canungra-road-city-beach-wa/property-details-buy-residential-14289642/`
@@ -63,11 +63,11 @@ describe("Get Url From Listing Details", () => {
 }`, () => {
     expect(
       Listing.getUrlFromListingData({
-        saleMethod: "rent",
+        saleMethod: "Rent",
         listingId: 14289682,
-        address: "1312-11 canungra road",
-        suburb: "city-beach",
-        state: "wa",
+        address: "1312-11 Canungra Road",
+        suburb: "City Beach",
+        state: "Wa",
       })
     ).toEqual(
       `https://www.realestateview.com.au/rental-properties/1312-11-canungra-road-city-beach-wa/property-details-rent-residential-14289682/`
@@ -75,19 +75,19 @@ describe("Get Url From Listing Details", () => {
   });
 
   test(`{
-  saleMethod: "sold",
+  saleMethod: "Sold",
   listingId: 32563467,
-  address: "1312-11 city road",
+  address: "1312-11 City Road",
   suburb: "city-beach",
   state: "waz",
 }`, () => {
     expect(
       Listing.getUrlFromListingData({
-        saleMethod: "sold",
+        saleMethod: "Sold",
         listingId: 32563467,
-        address: "1312-11 city road",
-        suburb: "city-beach",
-        state: "waz",
+        address: "1312-11 City Road",
+        suburb: "City Beach",
+        state: "Waz",
       })
     ).toEqual(
       `https://www.realestateview.com.au/real-estate/1312-11-city-road-city-beach-waz/property-details-sold-residential-32563467/`

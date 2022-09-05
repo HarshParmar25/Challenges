@@ -2,8 +2,8 @@ const UrlService = require("./urlService.js");
 
 const url0 = `https://resi.uatz.view.com.au/for-sale/in-vic/`;
 const url0Data = {
-  saleMethod: "sale",
-  state: "vic",
+  saleMethod: "Sale",
+  state: "Vic",
   suburb: "",
   postalCode: "",
   region: "",
@@ -15,35 +15,35 @@ const url0Data = {
 
 const url1 = `https://resi.uatz.view.com.au/for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-from-50000/`;
 const url1Data = {
-  saleMethod: "sale",
-  state: "vic",
-  suburb: "richmond",
+  saleMethod: "Sale",
+  state: "Vic",
+  suburb: "Richmond",
   postalCode: 3121,
   region: "",
   minPrice: 50000,
   maxPrice: "",
-  propertyTypes: ["studios", "townhouses", "villas"],
+  propertyTypes: ["Studios", "Townhouses", "Villas"],
   bedrooms:1,
 };
 
 const url2 = `https://resi.uatz.view.com.au/for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-up-to-75000/`;
 const url2Data = {
-  saleMethod: "sale",
-  state: "vic",
-  suburb: "richmond",
+  saleMethod: "Sale",
+  state: "Vic",
+  suburb: "Richmond",
   postalCode: 3121,
   region: "",
   minPrice: "",
   maxPrice: 75000,
-  propertyTypes: ["studios", "townhouses", "villas"],
+  propertyTypes: ["Studios", "Townhouses", "Villas"],
   bedrooms: 1,
 };
 
 const url3 = "https://resi.uatz.view.com.au/for-sale/in-wa-city-beach-6015-up-to-50000/";
 const url3Data = {
-  saleMethod: "sale",
-  state: "wa",
-  suburb: "city-beach",
+  saleMethod: "Sale",
+  state: "Wa",
+  suburb: "City Beach",
   postalCode: 6015,
   region: "",
   minPrice: "",
@@ -54,9 +54,9 @@ const url3Data = {
 
 const url4 = "https://resi.uatz.view.com.au/for-rent/in-wa-city-beach-6015-from-150-per-week/";
 const url4Data = {
-  saleMethod: "rent",
-  state: "wa",
-  suburb: "city-beach",
+  saleMethod: "Rent",
+  state: "Wa",
+  suburb: "City Beach",
   postalCode: 6015,
   region: "",
   minPrice: 150,
@@ -67,24 +67,24 @@ const url4Data = {
 
 const url5 = `https://resi.uatz.view.com.au/for-rent/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-between-5000-and-100000-per-week/`;
 const url5Data = {
-  saleMethod: "rent",
-  state: "vic",
-  suburb: "richmond",
+  saleMethod: "Rent",
+  state: "Vic",
+  suburb: "Richmond",
   postalCode: 3121,
   region: "",
   minPrice: 5000,
   maxPrice: 100000,
-  propertyTypes: ["studios", "townhouses", "villas"],
+  propertyTypes: ["Studios", "Townhouses", "Villas"],
   bedrooms: 1,
 };
 
 const url6 = `https://resi.uatz.view.com.au/for-rent/in-nsw-attunga/`;
 const url6Data = {
-  saleMethod: "rent",
-  state: "nsw",
+  saleMethod: "Rent",
+  state: "Nsw",
   suburb: "",
   postalCode: "",
-  region: "attunga",
+  region: "Attunga",
   minPrice: "",
   maxPrice: "",
   propertyTypes: [],
@@ -93,14 +93,14 @@ const url6Data = {
 
 const url7 = `https://resi.uatz.view.com.au/sold-properties/houses-and-units-and-apartments-and-studios-and-townhouses-and-land-and-villas-and-rural-in-vic-melbourne-with-3-bedrooms-between-50000-and-75000/`;
 const url7Data = {
-  saleMethod: "sold",
-  state: "vic",
+  saleMethod: "Sold",
+  state: "Vic",
   suburb: "",
   postalCode: "",
-  region: "melbourne",
+  region: "Melbourne",
   minPrice: 50000,
   maxPrice: 75000,
-  propertyTypes: ["houses", "units", "apartments", "studios", "townhouses", "land", "villas", "rural"],
+  propertyTypes: ["Houses", "Units", "Apartments", "Studios", "Townhouses", "Land", "Villas", "Rural"],
   bedrooms: 3,
 };
 
