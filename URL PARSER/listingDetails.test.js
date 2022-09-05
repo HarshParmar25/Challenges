@@ -9,7 +9,7 @@ describe("Get Listing Details From Url", () => {
       )
     ).toEqual({
       saleMethod: "buy",
-      listingId: "14289642",
+      listingId: 14289642,
       slug: "13-canungra-road-city-beach-wa",
       state: "wa",
     });
@@ -20,7 +20,7 @@ describe("Get Listing Details From Url", () => {
       Listing.getListingDataFromUrl(
         `https://www.realestateview.com.au/real-estate/3-jubilee-crescent-city-beach-wa/property-details-sold-residential-14160030/`
       )
-    ).toEqual({ saleMethod: "sold", listingId: "14160030", slug: "3-jubilee-crescent-city-beach-wa", state: "wa" });
+    ).toEqual({ saleMethod: "sold", listingId: 14160030, slug: "3-jubilee-crescent-city-beach-wa", state: "wa" });
   });
 
   test("https://www.realestateview.com.au/rental-properties/38-maloney-way-city-beach-wa/property-details-rent-residential-14202736/", () => {
@@ -28,14 +28,14 @@ describe("Get Listing Details From Url", () => {
       Listing.getListingDataFromUrl(
         `https://www.realestateview.com.au/rental-properties/38-maloney-way-city-beach-wa/property-details-rent-residential-14202736/`
       )
-    ).toEqual({ saleMethod: "rent", listingId: "14202736", slug: "38-maloney-way-city-beach-wa", state: "wa" });
+    ).toEqual({ saleMethod: "rent", listingId: 14202736, slug: "38-maloney-way-city-beach-wa", state: "wa" });
   });
 });
 
 describe("Get Url From Listing Details", () => {
   test(`{
   saleMethod: "buy",
-  listingId: "14289642",
+  listingId: 14289642,
   address: "13/12-11 canungra road",
   suburb: "city-beach",
   state: "wa",
@@ -43,7 +43,7 @@ describe("Get Url From Listing Details", () => {
     expect(
       Listing.getUrlFromListingData({
         saleMethod: "buy",
-        listingId: "14289642",
+        listingId: 14289642,
         address: "13/12-11 canungra road",
         suburb: "city-beach",
         state: "wa",
@@ -56,7 +56,7 @@ describe("Get Url From Listing Details", () => {
 
   test(`{
   saleMethod: "rent",
-  listingId: "14289682",
+  listingId: 14289682,
   address: "1312-11 canungra road",
   suburb: "city-beach",
   state: "wa",
@@ -64,7 +64,7 @@ describe("Get Url From Listing Details", () => {
     expect(
       Listing.getUrlFromListingData({
         saleMethod: "rent",
-        listingId: "14289682",
+        listingId: 14289682,
         address: "1312-11 canungra road",
         suburb: "city-beach",
         state: "wa",
@@ -76,7 +76,7 @@ describe("Get Url From Listing Details", () => {
 
   test(`{
   saleMethod: "sold",
-  listingId: "32563467",
+  listingId: 32563467,
   address: "1312-11 city road",
   suburb: "city-beach",
   state: "waz",
@@ -84,7 +84,7 @@ describe("Get Url From Listing Details", () => {
     expect(
       Listing.getUrlFromListingData({
         saleMethod: "sold",
-        listingId: "32563467",
+        listingId: 32563467,
         address: "1312-11 city road",
         suburb: "city-beach",
         state: "waz",

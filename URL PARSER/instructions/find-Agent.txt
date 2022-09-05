@@ -1,0 +1,28 @@
+agency
+https://www.realestateview.com.au/real-estate-agency/jellis-craig-richmond-13487/
+
+get agency id = 13487
+
+
+create url for agency
+{
+      agency-name: jellis-craig,
+      suburb:richmond,
+      agencyId: 13487
+}
+output: https://www.realestateview.com.au/real-estate-agency/jellis-craig-richmond-13487/
+
+
+
+
+
+agent 
+
+https://www.realestateview.com.au/agent-profile/andrew-mccann-33501/
+
+get {
+      agentName:  Andrew Mccann,
+      agentId: 33501,
+}
+
+reverse

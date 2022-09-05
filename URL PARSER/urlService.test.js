@@ -18,12 +18,12 @@ const url1Data = {
   saleMethod: "sale",
   state: "vic",
   suburb: "richmond",
-  postalCode: "3121",
+  postalCode: 3121,
   region: "",
-  minPrice: "50000",
+  minPrice: 50000,
   maxPrice: "",
   propertyTypes: ["studios", "townhouses", "villas"],
-  bedrooms: "1",
+  bedrooms:1,
 };
 
 const url2 = `https://resi.uatz.view.com.au/for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-up-to-75000/`;
@@ -31,12 +31,12 @@ const url2Data = {
   saleMethod: "sale",
   state: "vic",
   suburb: "richmond",
-  postalCode: "3121",
+  postalCode: 3121,
   region: "",
   minPrice: "",
-  maxPrice: "75000",
+  maxPrice: 75000,
   propertyTypes: ["studios", "townhouses", "villas"],
-  bedrooms: "1",
+  bedrooms: 1,
 };
 
 const url3 = "https://resi.uatz.view.com.au/for-sale/in-wa-city-beach-6015-up-to-50000/";
@@ -44,10 +44,10 @@ const url3Data = {
   saleMethod: "sale",
   state: "wa",
   suburb: "city-beach",
-  postalCode: "6015",
+  postalCode: 6015,
   region: "",
   minPrice: "",
-  maxPrice: "50000",
+  maxPrice: 50000,
   propertyTypes: [],
   bedrooms: "",
 };
@@ -57,9 +57,9 @@ const url4Data = {
   saleMethod: "rent",
   state: "wa",
   suburb: "city-beach",
-  postalCode: "6015",
+  postalCode: 6015,
   region: "",
-  minPrice: "150",
+  minPrice: 150,
   maxPrice: "",
   propertyTypes: [],
   bedrooms: "",
@@ -70,12 +70,12 @@ const url5Data = {
   saleMethod: "rent",
   state: "vic",
   suburb: "richmond",
-  postalCode: "3121",
+  postalCode: 3121,
   region: "",
-  minPrice: "5000",
-  maxPrice: "100000",
+  minPrice: 5000,
+  maxPrice: 100000,
   propertyTypes: ["studios", "townhouses", "villas"],
-  bedrooms: "1",
+  bedrooms: 1,
 };
 
 const url6 = `https://resi.uatz.view.com.au/for-rent/in-nsw-attunga/`;
@@ -98,10 +98,10 @@ const url7Data = {
   suburb: "",
   postalCode: "",
   region: "melbourne",
-  minPrice: "50000",
-  maxPrice: "75000",
+  minPrice: 50000,
+  maxPrice: 75000,
   propertyTypes: ["houses", "units", "apartments", "studios", "townhouses", "land", "villas", "rural"],
-  bedrooms: "3",
+  bedrooms: 3,
 };
 
 // /////////////////////////////////////
@@ -144,7 +144,7 @@ describe("Test for Get Url From Data", () => {
     expect(UrlService.getUrlFromData(url0Data)).toEqual(url0);
   });
 
-  test("Create a Url From data-1", () => {
+  test ("Create a Url From data-1", () => {
     expect(UrlService.getUrlFromData(url1Data)).toEqual(url1);
   });
 

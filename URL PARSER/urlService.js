@@ -23,7 +23,7 @@ class UrlService {
     let suburb = "";
     let region = "";
     if (+result[result.length - 1]) {
-      postalCode = result.pop();
+      postalCode = +result.pop();
       suburb = result.join("-");
     } else {
       region = result.join("-");
@@ -61,12 +61,13 @@ class UrlService {
         };
       return { minPrice: "", maxPrice: "" };
     }
+    maxPrice;
     return { minPrice, maxPrice };
   }
 
   static getBedrooms(url) {
     const bedroom = url.match(/-with-(.+?)-/);
-    if (bedroom) return bedroom[1];
+    if (bedroom) return +bedroom[1];
     return "";
   }
 
@@ -74,24 +75,27 @@ class UrlService {
     const data = url.split("/" || "/?").splice(3);
     const saleMethod = UrlService.getSaleMethod(data[0]);
     const propertyTypes = UrlService.getPropertyTypes(data[1]);
+    propertyTypes
     const bedrooms = UrlService.getBedrooms(data[1]);
-    const { minPrice, maxPrice } = UrlService.getPriceFilter(data[1]);
+    let { minPrice, maxPrice } = UrlService.getPriceFilter(data[1]);
     const { state, postalCode, suburb, region } = UrlService.getArea(data[1]);
+    if (minPrice) minPrice = parseFloat(minPrice);
+    if (maxPrice) maxPrice = parseFloat(maxPrice);
     return { saleMethod, state, suburb, postalCode, region, minPrice, maxPrice, propertyTypes, bedrooms };
   }
 
   static getPriceFilterUrl(data) {
     const { saleMethod, minPrice, maxPrice } = data;
     let priceFilter = "";
-    if (minPrice !== "" && maxPrice !== "") {
+    if (minPrice && maxPrice) {
       priceFilter = `-between-${minPrice}-and-${maxPrice}`;
-    } else if (minPrice !== "" && maxPrice === "") {
+    } else if (minPrice && !maxPrice) {
       priceFilter = `-from-${minPrice}`;
-    } else if (minPrice === "" && maxPrice !== "") {
+    } else if (!minPrice && maxPrice) {
       priceFilter = `-up-to-${maxPrice}`;
     }
 
-    if (saleMethod === "rent" && priceFilter !== "") {
+    if (saleMethod === "rent" && priceFilter) {
       return `${priceFilter}-per-week`;
     }
     return priceFilter;
@@ -99,9 +103,9 @@ class UrlService {
 
   static getBedroomUrl(data) {
     const { bedrooms } = data;
-    if (bedrooms === "") return "";
-    if (bedrooms !== "" && +bedrooms === 1) return `-with-${bedrooms}-bedroom`;
-    if (bedrooms !== "" && +bedrooms > 1) return `-with-${bedrooms}-bedrooms`;
+    if (!bedrooms) return "";
+    if (bedrooms && +bedrooms === 1) return `-with-${bedrooms}-bedroom`;
+    if (bedrooms && +bedrooms > 1) return `-with-${bedrooms}-bedrooms`;
   }
 
   static getPropertyTypesUrl(data) {
@@ -113,7 +117,7 @@ class UrlService {
   static getAreaUrl(data) {
     const { suburb, postalCode, region } = data;
     let area = "";
-    if (region === "" && postalCode === "" && suburb === "") return area;
+    if (!region && !postalCode && !suburb) return area;
     region !== "" ? (area = `-${region}`) : (area = `-${suburb}-${postalCode}`);
     return area;
   }

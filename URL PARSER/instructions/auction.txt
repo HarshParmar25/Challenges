@@ -1,0 +1,7 @@
+https://www.realestateview.com.au/sales-and-auction-results/in-vic-richmond-3121/
+
+{
+      state:vic,
+      suburb: richmond,
+      postal: 3121
+}
