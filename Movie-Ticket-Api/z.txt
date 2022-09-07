@@ -1,0 +1,5 @@
+only city id 8 and 17 has movies present
+show movies in cinema only shows on cinema id 22,23,24
+
+seating plan section
+city.id = 8 AND movie_id = 733 AND cinema.id = 22 AND cinema_hall.id = 82;
