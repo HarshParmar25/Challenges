@@ -3,7 +3,8 @@ const { getCinemaService, addCinemaService, editCinemaService, removeCinemaServi
 module.exports = {
   getCinema: async (req, res, next) => {
     try {
-      const result = await getCinemaService();
+      const { offset, limit } = req.query;
+      const result = await getCinemaService(offset, limit);
       return res.json({
         success: true,
         data: result[0],

@@ -23,7 +23,8 @@ module.exports = {
 
   getCinemawiseBooking: async (req, res) => {
     try {
-      const bookings = await getCinemawiseBookingService(req.params.id);
+      const { offset, limit } = req.query;
+      const bookings = await getCinemawiseBookingService(req.params.id, offset, limit);
       res.json({
         success: true,
         data: bookings[0],
@@ -38,7 +39,8 @@ module.exports = {
 
   getUniqueCustomer: async (req, res) => {
     try {
-      const customers = await getUniqueCustomerService();
+      const { offset, limit } = req.query;
+      const customers = await getUniqueCustomerService(offset, limit);
       res.json({
         success: true,
         data: customers[0],
@@ -53,8 +55,9 @@ module.exports = {
 
   getCinemaAndMovieWiseBooking: async (req, res) => {
     try {
+      const { offset, limit } = req.query;
       const { cinema_id, movie_id } = req.params;
-      const bookings = await getCinemaAndMovieWiseBookingService(cinema_id, movie_id);
+      const bookings = await getCinemaAndMovieWiseBookingService(cinema_id, movie_id, offset, limit);
       res.json({
         success: true,
         data: bookings[0],

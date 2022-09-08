@@ -1,8 +1,10 @@
 const pool = require("../db-connection/db.connect.js");
+const setOffsetLimit = require("../utils/limit-offset.js");
 
 module.exports = {
-  getCityService: () => {
-    return pool.query("SELECT * FROM city ORDER BY id");
+  getCityService: (offset, limit) => {
+    const LIMIT = setOffsetLimit(offset, limit);
+    return pool.query("SELECT * FROM city ORDER BY id " + LIMIT);
   },
 
   addCityService: (name, state) => {
