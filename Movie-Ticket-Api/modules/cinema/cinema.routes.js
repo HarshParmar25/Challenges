@@ -8,10 +8,11 @@ const {
   editDatabaseValidation,
   deleteDatabaseValidation,
 } = require("./cinema.validation.js");
+const { checkAdminLogin } = require("../utils/checkLogin.js");
 
 router.get("/", getCinema);
-router.post("/add", addCinemaSchema, addCinema);
-router.put("/edit", editCinemaSchema, editCinema);
-router.delete("/remove", removeCinemaSchema, removeCinema);
+router.post("/add", checkAdminLogin, addCinemaSchema, addCinema);
+router.put("/edit", checkAdminLogin, editCinemaSchema, editCinema);
+router.delete("/remove", checkAdminLogin, removeCinemaSchema, removeCinema);
 
 module.exports = router;

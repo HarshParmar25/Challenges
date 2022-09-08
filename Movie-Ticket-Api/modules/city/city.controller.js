@@ -3,6 +3,8 @@ const { getCityService, addCityService, editCityService, removeCityService } = r
 module.exports = {
   getCity: async (req, res, next) => {
     try {
+      console.log(req.session);
+
       const { offset, limit } = req.query;
       const result = await getCityService(offset, limit);
       return res.json({
