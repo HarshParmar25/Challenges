@@ -8,6 +8,8 @@ cinema-movie-wise-booking
 cinema id = 2369
 movie id = 111
 
+
+/////////////////////////////////////////////////////////////<br>
 City CRUD 
 GET- /city/
       res.{
@@ -32,7 +34,7 @@ DEL - /city/remove
             id:INT
       }
 
-
+//////////////////////////////////////////////////////////////<br>
 CINEMA CRUD
 
 GET- /cinema/
@@ -63,6 +65,7 @@ DEL - /cinema/remove
       }
 
 
+//////////////////////////////////////////////////////////////////////<br>
 REPORTS API
 MOVIES
 
@@ -102,7 +105,7 @@ List top 10 actors with highest number of movies
 GET - /top-actors/
 
 
-
+///////////////////////////////////////////////////////////////<br>
 ADMIN API
 
 Top 10 customers who has spend maximum 
@@ -124,7 +127,7 @@ GET - /admin/cinema-movie-wise-booking/:cinema_id/:movie_id
 
 
 //////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////<br>
 user limit and offset query params for required rows
 
 /?limit=10&offset=3
