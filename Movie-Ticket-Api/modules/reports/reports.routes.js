@@ -7,10 +7,10 @@ const {
   getCinemaAndMovieWiseBooking,
 } = require("../reports/reports.controller.js");
 
-const { getCinemaWiseBookingSchema, getMovieAndCinemaWiseBookingSchema } = require("../reports/reports.validation.js");
+const { getMovieAndCinemaWiseBookingSchema } = require("../reports/reports.validation.js");
 
 router.get("/top-customers", topCustomers);
-router.get("/cinema-wise-booking", getCinemaWiseBookingSchema, getCinemawiseBooking);
+router.get("/cinema-wise-booking", getCinemawiseBooking);
 router.get("/unique-customers", getUniqueCustomer);
 router.get("/cinema-movie-wise-booking", getMovieAndCinemaWiseBookingSchema, getCinemaAndMovieWiseBooking);
 

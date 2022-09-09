@@ -1,0 +1,19 @@
+rent|buy|sold Home page
+rent|buy|sold search page
+
+property detail page
+
+agency home page
+
+agency search page
+
+agency details page
+
+agent details page
+
+auction home page
+
+auction search result page
+
+suburb profile page
+

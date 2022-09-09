@@ -2,7 +2,7 @@ only city id 8 and 17 has movies present
 
 show movies in cinema only shows on cinema id 22,23,24
 
-seating plan section city.id = 8 AND movie_id = 733 AND cinema.id = 22 AND cinema_hall.id = 82;
+seating plan section city.id = 8 AND movie_id = 733 AND cinema.id = 22 AND cinema_hall.id = 82 show.id = 1,19,37,55 
 
 cinema-movie-wise-booking cinema id = 2369 movie id = 111
 
@@ -101,6 +101,7 @@ GET - /movie/buytickets
             movieid: INT, 
             cinemaid: INT, 
             cinemahallid: INT 
+            showid:INT
             }
 
 search movie by year 
@@ -114,18 +115,19 @@ GET - /top-actors/
 
 <!-- ####################################################  -->
 
-ADMIN API
+reports API
 
 Top 10 customers who has spend maximum 
-GET - /admin/top-customers/
+GET - /reports/top-customers/
 
-GET - /admin/cinema-wise-booking/?id= 
-id is cinema id
+total bookings of each cinemas
+GET - /reports/cinema-wise-booking/
+
 
 Unique customers who have booked tickets 
-GET - /admin/unique-customers
+GET - /reports/unique-customers
 
-GET - /admin/cinema-movie-wise-booking/?cinemaid= &movieid=
+GET - /reports/cinema-movie-wise-booking/?cinemaid= &movieid=
 
 <!-- ####################################################  -->
 
@@ -141,6 +143,22 @@ GET - /movie/cinema
 GET - /movie/buytickets 
 GET - /movie/search-by-name
 GET - /movie/search-by-year
-GET - /admin/cinema-wise-booking 
-GET - /admin/unique-customers 
-GET -/admin/cinema-movie-wise-booking
+GET - /reports/cinema-wise-booking 
+GET - /reports/unique-customers 
+GET -/reports/cinema-movie-wise-booking
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+to get movies by cinema hall id
+
+SELECT DISTINCT movie.id, movie.name, movie.release_date, movie.duration,movie.description, movie.certificate FROM movie INNER JOIN `show` ON movie.id = `show`.movie_id INNER JOIN cinema_hall ON `show`.cinema_hall_id = cinema_hall.id  WHERE cinema_hall.id = ?
+
+cinema_hall.id   82,142
+
+
+
+
+
+

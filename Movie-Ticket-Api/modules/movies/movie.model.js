@@ -30,12 +30,12 @@ module.exports = {
     );
   },
 
-  getSeatingPlanService: (city_id, movie_id, cinema_id, cinema_hall_id, offset, limit) => {
+  getSeatingPlanService: (city_id, movie_id, cinema_id, cinema_hall_id, showid, offset, limit) => {
     const LIMIT = setOffsetLimit(offset, limit);
     return pool.query(
-      "SELECT DISTINCT seat_id,status, price FROM show_seating_plan INNER JOIN show_section ON show_seating_plan.show_section_id = show_section.id INNER JOIN `show` ON show_section.show_id = `show`.id INNER JOIN cinema_hall ON `show`.cinema_hall_id = cinema_hall.id INNER JOIN cinema ON cinema_hall.cinema_id = cinema.id INNER JOIN city ON cinema.city_id = city.id WHERE city.id = ? AND movie_id = ? AND cinema.id = ? AND cinema_hall.id = ? " +
+      "SELECT seat.id, seat.number, seat.row_id, status, price FROM seat INNER JOIN show_seating_plan ON seat.id = show_seating_plan.seat_id INNER JOIN show_section ON show_seating_plan.show_section_id = show_section.id INNER JOIN `show` ON show_section.show_id = `show`.id INNER JOIN cinema_hall ON `show`.cinema_hall_id = cinema_hall.id INNER JOIN cinema ON cinema_hall.cinema_id = cinema.id INNER JOIN city ON cinema.city_id = city.id WHERE city.id = ? AND movie_id = ? AND cinema.id = ? AND cinema_hall.id = ? AND `show`.id = ? " +
         LIMIT,
-      [city_id, movie_id, cinema_id, cinema_hall_id]
+      [city_id, movie_id, cinema_id, cinema_hall_id, showid]
     );
   },
 };

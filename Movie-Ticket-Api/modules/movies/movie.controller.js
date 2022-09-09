@@ -73,8 +73,8 @@ module.exports = {
 
   getSeatingPlan: async (req, res) => {
     try {
-      const { cityid, movieid, cinemaid, cinemahallid, offset, limit } = req.query;
-      const seatingPlan = await getSeatingPlanService(cityid, movieid, cinemaid, cinemahallid, offset, limit);
+      const { cityid, movieid, cinemaid, cinemahallid, showid, offset, limit } = req.query;
+      const seatingPlan = await getSeatingPlanService(cityid, movieid, cinemaid, cinemahallid, showid, offset, limit);
       res.json({
         success: true,
         data: seatingPlan[0],

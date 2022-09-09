@@ -1,0 +1,9 @@
+https://www.realestateview.com.au/suburb-profile/for-vic-richmond-3121/
+
+result {
+      state
+      suburb
+      postalcode
+}
+
+reverse

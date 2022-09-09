@@ -35,6 +35,7 @@ module.exports = {
       movieid: Joi.number().required(),
       cinemaid: Joi.number().required(),
       cinemahallid: Joi.number().required(),
+      showid: Joi.number().required(),
       offset: Joi.number().integer(),
       limit: Joi.number().integer(),
     });

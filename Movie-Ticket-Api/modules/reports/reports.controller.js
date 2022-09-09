@@ -23,8 +23,7 @@ module.exports = {
 
   getCinemawiseBooking: async (req, res) => {
     try {
-      const { id, offset, limit } = req.query;
-      const bookings = await getCinemawiseBookingService(id, offset, limit);
+      const bookings = await getCinemawiseBookingService();
       res.json({
         success: true,
         data: bookings[0],
