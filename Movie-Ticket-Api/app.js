@@ -2,6 +2,11 @@ const express = require("express");
 const logger = require("morgan");
 const helmet = require("helmet");
 const session = require("express-session");
+let RedisStore = require("connect-redis")(session);
+
+const { createClient } = require("redis");
+let redisClient = createClient({ legacyMode: true });
+redisClient.connect().catch((err) => console.log("error", err));
 
 const app = express();
 app.use(helmet());
@@ -12,9 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: "Keep it secret",
-    name: "uniqueSessionID",
+    name: "uniquesessionid",
+    store: new RedisStore({ client: redisClient }),
     saveUninitialized: false,
-    maxAge: 10000,
     resave: false,
   })
 );

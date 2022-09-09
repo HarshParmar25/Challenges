@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { userLogIn, adminLogIn } = require("../login/login.controller.js");
+const { userLogIn } = require("../login/login.controller.js");
+const loginFieldValidation = require("../login/login.validation.js");
 
-router.use("/user", userLogIn);
-router.use("/admin", adminLogIn);
-
-
+router.post("/", loginFieldValidation, userLogIn);
 
 module.exports = router;

@@ -8,7 +8,7 @@ cinema-movie-wise-booking cinema id = 2369 movie id = 111
 
 <!-- ####################################################  -->
 
-GET - /login/user
+POST - /login
       req.body{ 
             username:string, 
             password:string 
@@ -17,11 +17,6 @@ GET - /login/user
 user can access all paths acept all "/admin" paths and database update paths (city- /add, /edit, /remove) (cinema- /add,
 /edit, /remove)
 
-GET - /login/admin 
-      req.body{
-             username:string, 
-             password:string
-              }
 
 GET - /loout
 
@@ -88,31 +83,31 @@ REPORTS API MOVIES
 
 get all movies in a city 
 GET - /movie/ 
-      req.body{ 
-            city_id:INT 
+      req.query{ 
+            cityid:INT 
             }
 
 get movies in a given cinema 
 GET - /movie/cinema 
-      req.body{ 
+      req.query{ 
             id:INT
              } 
       id is cinema id
 
 buy tickets 
 GET - /movie/buytickets 
-      req.body{ 
-            city_id:INT, 
-            movie_id: INT, 
-            cinema_id: INT, 
-            cinema_hall_id: INT 
+      req.query{ 
+            cityid:INT, 
+            movieid: INT, 
+            cinemaid: INT, 
+            cinemahallid: INT 
             }
 
 search movie by year 
-GET - /movie/year/:year
+GET - /movie/search-by-year/?year=
 
 search movie by name 
-GET - /movie/:name
+GET - /movie/search-by-name/?name=
 
 List top 10 actors with highest number of movies 
 GET - /top-actors/
@@ -124,13 +119,13 @@ ADMIN API
 Top 10 customers who has spend maximum 
 GET - /admin/top-customers/
 
-GET - /admin/cinema-wise-booking/:id 
+GET - /admin/cinema-wise-booking/?id= 
 id is cinema id
 
 Unique customers who have booked tickets 
 GET - /admin/unique-customers
 
-GET - /admin/cinema-movie-wise-booking/:cinema_id/:movie_id
+GET - /admin/cinema-movie-wise-booking/?cinemaid= &movieid=
 
 <!-- ####################################################  -->
 
@@ -144,8 +139,8 @@ GET - /cinema
 GET - /movie 
 GET - /movie/cinema 
 GET - /movie/buytickets 
-GET - /movie/year/:year
-GET - /movie/:name 
-GET - /admin/cinema-wise-booking/:id 
+GET - /movie/search-by-name
+GET - /movie/search-by-year
+GET - /admin/cinema-wise-booking 
 GET - /admin/unique-customers 
-GET -/admin/cinema-movie-wise-booking/:cinema_id/:movie_id
+GET -/admin/cinema-movie-wise-booking

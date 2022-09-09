@@ -17,7 +17,7 @@ const {
 router.get("/", getAllMoviesValidation, getAllMovies);
 router.get("/cinema", getMovieInCinemaValidation, getMoviesInCinema);
 router.get("/buytickets", getSeatingPlanValidation, getSeatingPlan);
-router.get("/year/:year", getMoviesByYear);
-router.get("/:name", getMovieByName);
+router.get("/search-by-year/", getMoviesByYear);
+router.get("/search-by-name", getMovieByName);
 
 module.exports = router;

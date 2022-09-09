@@ -5,9 +5,4 @@ module.exports = {
     const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
     return pool.query(sql, [username, password]);
   },
-
-  getAdminInfo: (username, password) => {
-    const sql = `SELECT * FROM users WHERE username = ? AND password = ? AND role = "admin"`;
-    return pool.query(sql, [username, password]);
-  },
 };

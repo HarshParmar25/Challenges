@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const database = require("../db-connection/db.connect.js");
 
 function addCitySchema(req, res, next) {
   const schema = Joi.object({
@@ -40,29 +39,4 @@ function removeCitySchema(req, res, next) {
   }
 }
 
-function editDatabaseValidation(req, res, next) {
-  const queryText = "SELECT * FROM city WHERE name = ? AND state = ?;";
-  const name = req.body.name;
-  const state = req.body.state;
-  database.query(queryText, [name, state], (error, results) => {
-    if (results.length !== 0) {
-      res.status(400).send("City already exists");
-    } else {
-      next();
-    }
-  });
-}
-
-function deleteDatabaseValidation(req, res, next) {
-  const queryText = "SELECT * FROM city WHERE id = ?;";
-  const id = req.body.id;
-  database.query(queryText, [id], (error, results) => {
-    if (results.length === 0) {
-      res.status(400).send("City Id is not valid");
-    } else {
-      next();
-    }
-  });
-}
-
-module.exports = { addCitySchema, editCitySchema, removeCitySchema, editDatabaseValidation, deleteDatabaseValidation };
+module.exports = { addCitySchema, editCitySchema, removeCitySchema };

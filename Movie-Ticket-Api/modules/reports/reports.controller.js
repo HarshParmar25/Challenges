@@ -3,7 +3,7 @@ const {
   getCinemawiseBookingService,
   getUniqueCustomerService,
   getCinemaAndMovieWiseBookingService,
-} = require("../admin/admin.model.js");
+} = require("../reports/reports.model.js");
 
 module.exports = {
   topCustomers: async (req, res) => {
@@ -23,8 +23,8 @@ module.exports = {
 
   getCinemawiseBooking: async (req, res) => {
     try {
-      const { offset, limit } = req.query;
-      const bookings = await getCinemawiseBookingService(req.params.id, offset, limit);
+      const { id, offset, limit } = req.query;
+      const bookings = await getCinemawiseBookingService(id, offset, limit);
       res.json({
         success: true,
         data: bookings[0],
@@ -55,9 +55,8 @@ module.exports = {
 
   getCinemaAndMovieWiseBooking: async (req, res) => {
     try {
-      const { offset, limit } = req.query;
-      const { cinema_id, movie_id } = req.params;
-      const bookings = await getCinemaAndMovieWiseBookingService(cinema_id, movie_id, offset, limit);
+      const { cinemaid, movieid, offset, limit } = req.query;
+      const bookings = await getCinemaAndMovieWiseBookingService(cinemaid, movieid, offset, limit);
       res.json({
         success: true,
         data: bookings[0],
