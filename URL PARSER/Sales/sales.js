@@ -1,6 +1,6 @@
-const CaseChange = require("../modules/caseChange.js");
+const CaseChange = require("../utils/caseChange.js");
 
-class UrlService {
+class Sales {
   static getSaleMethod(url) {
     if (url.includes("sale")) return "sale";
     if (url.includes("rent")) return "rent";
@@ -66,11 +66,11 @@ class UrlService {
 
   static getDataFromUrl(url) {
     const data = url.split("/" || "/?").splice(3);
-    let saleMethod = UrlService.getSaleMethod(data[0]);
-    let propertyTypes = UrlService.getPropertyTypes(data[1]);
-    const bedrooms = UrlService.getBedrooms(data[1]);
-    let { minPrice, maxPrice } = UrlService.getPriceFilter(data[1]);
-    let { state, postalCode, suburb, region } = UrlService.getArea(data[1]);
+    let saleMethod = Sales.getSaleMethod(data[0]);
+    let propertyTypes = Sales.getPropertyTypes(data[1]);
+    const bedrooms = Sales.getBedrooms(data[1]);
+    let { minPrice, maxPrice } = Sales.getPriceFilter(data[1]);
+    let { state, postalCode, suburb, region } = Sales.getArea(data[1]);
     if (minPrice) minPrice = parseFloat(minPrice);
     if (maxPrice) maxPrice = parseFloat(maxPrice);
 
@@ -134,7 +134,7 @@ class UrlService {
   static getUrlFromData(data) {
     let { state } = data;
     state = CaseChange.toLowerCase(state);
-    const baseUrl = `https://resi.uatz.view.com.au/`;
+    const baseUrl = `https://www.realestateview.com.au/`;
 
     const priceFilter = this.getPriceFilterUrl(data);
     const totalBedrooms = this.getBedroomUrl(data);
@@ -146,4 +146,4 @@ class UrlService {
   }
 }
 
-module.exports = UrlService;
+module.exports = Sales;

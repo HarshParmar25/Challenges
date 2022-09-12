@@ -1,11 +1,12 @@
 class CaseChange {
   static toUpperCase(str) {
     str = str.replace(/(?<=\b)\w/g, (match) => match.toUpperCase());
-   
-   return str.replace(/-/g, " ");
+
+    return str.replace(/-/g, " ");
   }
 
   static toLowerCase(str) {
+    str = str.replace(/&/g, "");
     return str.replace(/\s+/g, "-").toLowerCase();
   }
 

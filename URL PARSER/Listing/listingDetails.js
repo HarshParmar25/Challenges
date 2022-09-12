@@ -1,4 +1,4 @@
-const CaseChange = require("../modules/caseChange.js");
+const CaseChange = require("../utils/caseChange.js");
 
 class Listing {
   static getArea(url) {

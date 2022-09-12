@@ -1,12 +1,9 @@
-const CaseChange = require("../modules/caseChange.js");
+const CaseChange = require("../utils/caseChange.js");
 
 class Agent {
   static getAgentName(url) {
     const filteredUrl = url.match(/agent-profile\/(.*)(-\d+)/)[1];
-    const name = filteredUrl
-      .split("-")
-      .map((name) => name[0].toUpperCase() + name.slice(1))
-      .join(" ");
+    const name = CaseChange.toUpperCase(filteredUrl);
     return name;
   }
   static getAgentId(url) {
@@ -21,21 +18,9 @@ class Agent {
 
   static getAgentUrl({ agentName, agentId }) {
     const baseUrl = `https://www.realestateview.com.au/agent-profile/`;
-    const nameSlug = agentName.replace(" ", "-").toLowerCase();
+    const nameSlug = CaseChange.toLowerCase(agentName);
     return `${baseUrl}${nameSlug}-${agentId}/`;
   }
 }
 
 module.exports = Agent;
-
-const url0 = `https://www.realestateview.com.au/agent-profile/andrew-mccann-33501/`;
-const data = {
-  agentName: "Andrew Mccann",
-  agentId: 33501,
-};
-
-const res = Agent.getAgentData(url0);
-res;
-
-const r = Agent.getAgentUrl(data);
-r;

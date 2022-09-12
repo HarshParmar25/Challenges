@@ -1,4 +1,4 @@
-const CaseChange = require("../modules/caseChange.js");
+const CaseChange = require("../utils/caseChange.js");
 
 class Auction {
   static getAuctionDataFromUrl(url) {
