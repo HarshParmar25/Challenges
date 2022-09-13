@@ -21,6 +21,12 @@ describe("Url types", () => {
     expect(getType(`https://www.realestateview.com.au/for-rent/in-wa-city-beach-6015/`)).toEqual(`rent-search-page`);
   });
 
+  test("sold search page", () => {
+    expect(getType(`https://www.realestateview.com.au/sold-properties/in-vic-richmond-3121/`)).toEqual(
+      `sold-search-page`
+    );
+  });
+
   test(`buy property details`, () => {
     expect(
       getType(`https://www.realestateview.com.au/real-estate/city-beach-wa/property-details-buy-residential-14321503/`)
@@ -60,6 +66,24 @@ describe("Url types", () => {
   test(`agent details page`, () => {
     expect(getType(`https://www.realestateview.com.au/agent-profile/daniel-imbesi-12763/`)).toEqual(
       `agent-profile-page`
+    );
+  });
+
+  test(`auction home page`, () => {
+    expect(getType(`https://www.realestateview.com.au/sales-and-auction-results/victoria/`)).toEqual(
+      `auction-home-page`
+    );
+  });
+
+  test(`auction search result page`, () => {
+    expect(getType(`https://www.realestateview.com.au/sales-and-auction-results/in-vic-merrijig-3875/`)).toEqual(
+      `auction-search-page`
+    );
+  });
+
+  test(`suburb profile page`, () => {
+    expect(getType(`https://www.realestateview.com.au/suburb-profile/for-vic-richmond-3121/`)).toEqual(
+      `suburb-profile-page`
     );
   });
 });
