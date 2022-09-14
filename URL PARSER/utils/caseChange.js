@@ -6,7 +6,7 @@ class CaseChange {
   }
 
   static toLowerCase(str) {
-    str = str.replace(/&/g, "");
+    str = str.replace(/[^a-zA-Z0-9]/g, " ");
     return str.replace(/\s+/g, "-").toLowerCase();
   }
 
