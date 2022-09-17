@@ -5,6 +5,22 @@ interface GetCinema {
   offset: string;
   limit: string;
 }
+interface AddCinema {
+  code: string;
+  name: string;
+  city_id: number;
+  address: string;
+}
+interface EditCinema {
+  code: string;
+  name: string;
+  city_id: number;
+  address: string;
+  id: number;
+}
+interface RemoveCinema {
+  id: number;
+}
 
 async function getCinema(req: Request<{}, {}, {}, GetCinema>, res: Response, next: NextFunction) {
   try {
@@ -22,10 +38,10 @@ async function getCinema(req: Request<{}, {}, {}, GetCinema>, res: Response, nex
   }
 }
 
-async function addCinema(req: Request, res: Response, next: NextFunction) {
+async function addCinema(req: Request<{}, {}, AddCinema>, res: Response, next: NextFunction) {
   const { code, name, city_id, address } = req.body;
   try {
-    const result = await addCinemaService<{ insertId: string }>(code, name, city_id, address);
+    const result = await addCinemaService(code, name, city_id, address);
     return res.json({
       success: true,
       insertId: result[0].insertId,
@@ -38,7 +54,7 @@ async function addCinema(req: Request, res: Response, next: NextFunction) {
     });
   }
 }
-async function editCinema(req: Request, res: Response, next: NextFunction) {
+async function editCinema(req: Request<{}, {}, EditCinema>, res: Response, next: NextFunction) {
   const { code, name, city_id, address, id } = req.body;
   try {
     const result = await editCinemaService(code, name, city_id, address, id);
@@ -53,7 +69,7 @@ async function editCinema(req: Request, res: Response, next: NextFunction) {
     });
   }
 }
-async function removeCinema(req: Request, res: Response, next: NextFunction) {
+async function removeCinema(req: Request<{}, {}, RemoveCinema>, res: Response, next: NextFunction) {
   const id = req.body.id;
   try {
     const result = await removeCinemaService(id);

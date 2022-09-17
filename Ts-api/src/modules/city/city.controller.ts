@@ -1,7 +1,27 @@
 import { getCityService, addCityService, editCityService, removeCityService } from "./city.model";
 import { Request, Response, NextFunction } from "express";
 
-export async function getCity(req: Request, res: Response, next: NextFunction) {
+interface GetCity {
+  offset: string;
+  limit: string;
+}
+
+interface AddCity {
+  name: string;
+  state: string;
+}
+
+interface EditCity {
+  name: string;
+  state: string;
+  id: number;
+}
+
+interface RemoveCity {
+  id: number;
+}
+
+export async function getCity(req: Request<{}, {}, {}, GetCity>, res: Response, next: NextFunction) {
   try {
     const { offset, limit } = req.query;
     const result = await getCityService(offset, limit);
@@ -17,7 +37,7 @@ export async function getCity(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function addCity(req: Request, res: Response, next: NextFunction) {
+export async function addCity(req: Request<{}, {}, AddCity>, res: Response, next: NextFunction) {
   const { name, state } = req.body;
   try {
     const result = await addCityService(name, state);
@@ -34,7 +54,7 @@ export async function addCity(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function editCity(req: Request, res: Response, next: NextFunction) {
+export async function editCity(req: Request<{}, {}, EditCity>, res: Response, next: NextFunction) {
   const { name, state, id } = req.body;
 
   try {
@@ -51,7 +71,7 @@ export async function editCity(req: Request, res: Response, next: NextFunction) 
   }
 }
 
-export async function removeCity(req: Request, res: Response, next: NextFunction) {
+export async function removeCity(req: Request<{}, {}, RemoveCity>, res: Response, next: NextFunction) {
   const id = req.body.id;
 
   try {

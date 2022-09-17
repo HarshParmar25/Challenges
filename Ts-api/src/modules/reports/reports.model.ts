@@ -13,7 +13,7 @@ export function getCinemawiseBookingService() {
   );
 }
 
-export function getUniqueCustomerService(offset: any, limit: any) {
+export function getUniqueCustomerService(offset: string, limit: string) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query(
     "SELECT DISTINCT c.id, c.name, c.mobile_no, c.email_id FROM customer c INNER JOIN booking b ON c.id = b.customer_id " +
@@ -21,7 +21,12 @@ export function getUniqueCustomerService(offset: any, limit: any) {
   );
 }
 
-export function getCinemaAndMovieWiseBookingService(cinema_id: any, movie_id: any, offset: any, limit: any) {
+export function getCinemaAndMovieWiseBookingService(
+  cinema_id: string,
+  movie_id: string,
+  offset: string,
+  limit: string
+) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query(
     "SELECT c.id, c.name, c.email_id,b.booking_id from customer c INNER JOIN  booking b on c.id = b.customer_id INNER JOIN show_seating_plan ssp on b.id = ssp.booking_id INNER JOIN seat on ssp.seat_id = seat.id INNER JOIN cinema_hall_section chs on seat.cinema_hall_section_id = chs.id INNER JOIN cinema_hall ch ON chs.cinema_hall_id = ch.id INNER JOIN `show` on ch.id = `show`.cinema_hall_id INNER JOIN movie on `show`.movie_id = movie.id WHERE movie.id = ? AND ch.id = ? ORDER BY c.id " +

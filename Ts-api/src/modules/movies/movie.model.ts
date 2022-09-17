@@ -1,7 +1,7 @@
 import { pool } from "../db-connection/db.connect";
 import { setOffsetLimit } from "../utils/limit-offset";
 
-export function getAllMoviesService(id: any, offset: any, limit: any) {
+export function getAllMoviesService(id: string, offset: string, limit: string) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query(
     "SELECT DISTINCT movie.id, movie.name, movie.release_date, movie.duration,movie.description, movie.certificate FROM movie INNER JOIN `show` ON movie.id = `show`.movie_id INNER JOIN cinema_hall ON `show`.cinema_hall_id = cinema_hall.id INNER JOIN cinema ON cinema_hall.cinema_id = cinema.id INNER JOIN city ON cinema.city_id = city.id WHERE city.id = ? " +
@@ -10,17 +10,17 @@ export function getAllMoviesService(id: any, offset: any, limit: any) {
   );
 }
 
-export function getMovieByNameService(name: any, offset: any, limit: any) {
+export function getMovieByNameService(name: string, offset: string, limit: string) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query("SELECT * FROM movie WHERE name LIKE CONCAT( '%',?,'%') " + LIMIT, [name]);
 }
 
-export function getMoviesByYearService(year: any, offset: any, limit: any) {
+export function getMoviesByYearService(year: string, offset: string, limit: string) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query("SELECT * FROM movie WHERE YEAR(release_date) = ? " + LIMIT, [year]);
 }
 
-export function getMoviesInCinemaService(id: any, offset: any, limit: any) {
+export function getMoviesInCinemaService(id: string, offset: string, limit: string) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query(
     "SELECT DISTINCT movie.id, movie.name, movie.release_date, movie.duration,movie.description, movie.certificate FROM movie INNER JOIN `show` ON movie.id = `show`.movie_id INNER JOIN cinema_hall ON `show`.cinema_hall_id = cinema_hall.id INNER JOIN cinema ON cinema_hall.cinema_id = cinema.id WHERE cinema.id = ? " +
@@ -30,13 +30,13 @@ export function getMoviesInCinemaService(id: any, offset: any, limit: any) {
 }
 
 export function getSeatingPlanService(
-  city_id: any,
-  movie_id: any,
-  cinema_id: any,
-  cinema_hall_id: any,
-  showid: any,
-  offset: any,
-  limit: any
+  city_id: string,
+  movie_id: string,
+  cinema_id: string,
+  cinema_hall_id: string,
+  showid: string,
+  offset: string,
+  limit: string
 ) {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query(

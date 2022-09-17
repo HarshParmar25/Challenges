@@ -1,7 +1,7 @@
 import { pool } from "../db-connection/db.connect";
 import { setOffsetLimit } from "../utils/limit-offset";
 
-export function getCityService(offset: any, limit: any): Promise<any> {
+export function getCityService(offset: string, limit: string): Promise<any> {
   const LIMIT = setOffsetLimit(offset, limit);
   return pool.query("SELECT * FROM city ORDER BY id " + LIMIT);
 }

@@ -8,7 +8,7 @@ export function getCinemaService(offset: string, limit: string) {
   return pool.query("SELECT * FROM cinema ORDER BY id " + LIMIT);
 }
 
-export function addCinemaService<T>(code: string, name: string, city_id: number, address: string) {
+export function addCinemaService(code: string, name: string, city_id: number, address: string): Promise<any> {
   return pool.query("INSERT INTO cinema (code,name,city_id,address) VALUES (?, ?, ?, ?)", [
     code,
     name,

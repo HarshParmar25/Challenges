@@ -36,7 +36,12 @@ export async function getCinemawiseBooking(req: Request, res: Response) {
   }
 }
 
-export async function getUniqueCustomer(req: Request, res: Response) {
+interface GetUniqueCustomer {
+  offset: string;
+  limit: string;
+}
+
+export async function getUniqueCustomer(req: Request<{}, {}, {}, GetUniqueCustomer>, res: Response) {
   try {
     const { offset, limit } = req.query;
     const customers = await getUniqueCustomerService(offset, limit);
@@ -52,7 +57,17 @@ export async function getUniqueCustomer(req: Request, res: Response) {
   }
 }
 
-export async function getCinemaAndMovieWiseBooking(req: Request, res: Response) {
+interface GetCinemaAndMovieWiseBooking {
+  cinemaid: string;
+  movieid: string;
+  offset: string;
+  limit: string;
+}
+
+export async function getCinemaAndMovieWiseBooking(
+  req: Request<{}, {}, {}, GetCinemaAndMovieWiseBooking>,
+  res: Response
+) {
   try {
     const { cinemaid, movieid, offset, limit } = req.query;
     const bookings = await getCinemaAndMovieWiseBookingService(cinemaid, movieid, offset, limit);
