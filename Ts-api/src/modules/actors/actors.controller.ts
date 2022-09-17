@@ -15,3 +15,4 @@ export async function getTopActors(req: Request, res: Response) {
     });
   }
 }
+

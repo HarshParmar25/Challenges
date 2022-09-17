@@ -1,25 +1,7 @@
 import { getCityService, addCityService, editCityService, removeCityService } from "./city.model";
 import { Request, Response, NextFunction } from "express";
-
-interface GetCity {
-  offset: string;
-  limit: string;
-}
-
-interface AddCity {
-  name: string;
-  state: string;
-}
-
-interface EditCity {
-  name: string;
-  state: string;
-  id: number;
-}
-
-interface RemoveCity {
-  id: number;
-}
+import { ResultSetHeader } from "mysql2";
+import { GetCity, AddCity, EditCity, RemoveCity } from "./city.interface";
 
 export async function getCity(req: Request<{}, {}, {}, GetCity>, res: Response, next: NextFunction) {
   try {

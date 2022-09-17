@@ -9,4 +9,15 @@ let pool = mysql
   })
   .promise();
 
+// const executeQuery = <T>(query: string, params: string[] | Object): Promise<T> => {
+//   return new Promise<T>(async (resolve, reject) => {
+//     try {
+//       const results = (await pool.query(query, params)) as T;
+//       resolve(results);
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };
+
 export { pool };

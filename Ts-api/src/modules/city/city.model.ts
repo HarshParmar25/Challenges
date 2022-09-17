@@ -1,19 +1,48 @@
+import { ResultSetHeader } from "mysql2";
 import { pool } from "../db-connection/db.connect";
 import { setOffsetLimit } from "../utils/limit-offset";
+import { ICity } from "./city.interface";
 
-export function getCityService(offset: string, limit: string): Promise<any> {
-  const LIMIT = setOffsetLimit(offset, limit);
-  return pool.query("SELECT * FROM city ORDER BY id " + LIMIT);
+export async function getCityService(offset: string, limit: string) {
+  try {
+    const LIMIT = setOffsetLimit(offset, limit);
+    const results = await pool.query<ICity[]>("SELECT * FROM city ORDER BY id " + LIMIT);
+    return results;
+  } catch (error) {
+    throw error;
+  }
 }
 
-export function addCityService(name: string, state: string): Promise<any> {
-  return pool.query("INSERT INTO city (name, state) VALUES (?, ?)", [name, state]);
+export async function addCityService(name: string, state: string) {
+  try {
+    const results = (await pool.query("INSERT INTO city (name, state) VALUES (?, ?)", [
+      name,
+      state,
+    ])) as ResultSetHeader[];
+    return results;
+  } catch (error) {
+    throw error;
+  }
 }
 
-export function editCityService(name: string, state: string, id: number): Promise<any> {
-  return pool.query("UPDATE city SET name = ?, state = ? WHERE id = ?", [name, state, id]);
+export async function editCityService(name: string, state: string, id: number) {
+  try {
+    const results = (await pool.query("UPDATE city SET name = ?, state = ? WHERE id = ?", [
+      name,
+      state,
+      id,
+    ])) as ResultSetHeader[];
+    return results;
+  } catch (error) {
+    throw error;
+  }
 }
 
-export function removeCityService(id: number): Promise<any> {
-  return pool.query("DELETE FROM city WHERE id = ?", [id]);
+export async function removeCityService(id: number) {
+  try {
+    const results = (await pool.query("DELETE FROM city WHERE id = ?", [id])) as ResultSetHeader[];
+    return results;
+  } catch (error) {
+    throw error;
+  }
 }

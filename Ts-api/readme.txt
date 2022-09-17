@@ -3,8 +3,9 @@ only city id 8 and 17 has movies present
 show movies in cinema only shows on cinema id 22,23,24
 
 seating plan section city.id = 8 AND movie_id = 733 AND cinema.id = 22 AND cinema_hall.id = 82 show.id = 1,19,37,55 
+?cityid=8&movieid=733&cinemaid=22&cinemahallid=82&showid=1
 
-cinema-movie-wise-booking cinema id = 2369 movie id = 111
+cinema-movie-wise-booking cinema id = 111 movie id = 2369
 
 <!-- ####################################################  -->
 

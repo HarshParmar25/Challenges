@@ -1,26 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { getCinemaService, addCinemaService, editCinemaService, removeCinemaService } from "./cinema.model";
-
-interface GetCinema {
-  offset: string;
-  limit: string;
-}
-interface AddCinema {
-  code: string;
-  name: string;
-  city_id: number;
-  address: string;
-}
-interface EditCinema {
-  code: string;
-  name: string;
-  city_id: number;
-  address: string;
-  id: number;
-}
-interface RemoveCinema {
-  id: number;
-}
+import { GetCinema, AddCinema, EditCinema, RemoveCinema } from "./cinema.interface";
 
 async function getCinema(req: Request<{}, {}, {}, GetCinema>, res: Response, next: NextFunction) {
   try {
@@ -54,6 +34,7 @@ async function addCinema(req: Request<{}, {}, AddCinema>, res: Response, next: N
     });
   }
 }
+
 async function editCinema(req: Request<{}, {}, EditCinema>, res: Response, next: NextFunction) {
   const { code, name, city_id, address, id } = req.body;
   try {
@@ -69,6 +50,7 @@ async function editCinema(req: Request<{}, {}, EditCinema>, res: Response, next:
     });
   }
 }
+
 async function removeCinema(req: Request<{}, {}, RemoveCinema>, res: Response, next: NextFunction) {
   const id = req.body.id;
   try {

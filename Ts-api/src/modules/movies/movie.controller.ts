@@ -6,40 +6,7 @@ import {
   getMoviesInCinemaService,
   getSeatingPlanService,
 } from "./movie.model";
-
-interface GetMovies {
-  cityid: string;
-  offset: string;
-  limit: string;
-}
-
-interface GetMoviesByName {
-  name: string;
-  offset: string;
-  limit: string;
-}
-
-interface GetMoviesByYear {
-  year: string;
-  offset: string;
-  limit: string;
-}
-
-interface GetMoviesInCinema {
-  id: string;
-  offset: string;
-  limit: string;
-}
-
-interface GetSeatingPlan {
-  cityid: string;
-  movieid: string;
-  cinemaid: string;
-  cinemahallid: string;
-  showid: string;
-  offset: string;
-  limit: string;
-}
+import { GetMovies, GetMoviesByName, GetMoviesByYear, GetMoviesInCinema, GetSeatingPlan } from "./movie.interface";
 
 export async function getAllMovies(req: Request<{}, {}, {}, GetMovies>, res: Response) {
   try {
