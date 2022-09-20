@@ -1,4 +1,4 @@
-import CaseChange from "../utils/CaseChange";
+import slugify from "../utils/CaseChange";
 
 interface IAgencyUrl {
   agencyName: string;
@@ -14,8 +14,8 @@ export class Agency {
   }
 
   static getAgencyUrl({ agencyName, suburb, agencyId }: IAgencyUrl): string {
-    agencyName = CaseChange.toLowerCase(agencyName);
-    suburb = CaseChange.toLowerCase(suburb);
+    agencyName = slugify.toLowerCase(agencyName);
+    suburb = slugify.toLowerCase(suburb);
     const baseUrl = `https://www.realestateview.com.au/real-estate-agency/`;
     return `${baseUrl}${agencyName}-${suburb}-${agencyId}/`;
   }
