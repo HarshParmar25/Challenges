@@ -37,7 +37,7 @@ interface IFiltersOutput {
   priceFilter: string;
   bedroomFilter: string;
   propertyTypesFilter: string;
-  saleMethodSlug: string;
+  saleMethod: string;
 }
 
 export { IStateData, IRegionData, ICityData, ISuburbData, IFiltersData, IFiltersOutput };

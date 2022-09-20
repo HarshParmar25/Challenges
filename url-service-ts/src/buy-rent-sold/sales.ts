@@ -1,35 +1,55 @@
-import CaseChange from "../utils/CaseChange";
+import { slugify } from "../utils/slugify";
 import { IStateData, ICityData, IRegionData, ISuburbData, IFiltersData, IFiltersOutput } from "./sales.interface";
 
 export class Sale {
   private static baseUrl = `https://www.realestateview.com.au/`;
 
   static getStateUrl(data: IStateData): string {
-    data = CaseChange.slugify<IStateData>(data);
-    const { saleMethodSlug, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
-    return `${this.baseUrl}${saleMethodSlug}/${propertyTypesFilter}in-${data.state}${bedroomFilter}${priceFilter}/`;
+    let { saleMethod, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
+
+    saleMethod = slugify(saleMethod);
+
+    let filters = `${propertyTypesFilter}in-${data.state}${bedroomFilter}${priceFilter}`;
+    filters = slugify(filters);
+
+    return `${this.baseUrl}${saleMethod}/${filters}/`;
   }
 
   static getRegionUrl(data: IRegionData): string {
-    data = CaseChange.slugify<IRegionData>(data);
-    const { saleMethodSlug, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
-    return `${this.baseUrl}${saleMethodSlug}/${propertyTypesFilter}in-${data.state}-${data.region}${bedroomFilter}${priceFilter}/`;
+    let { saleMethod, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
+
+    saleMethod = slugify(saleMethod);
+
+    let filters = `${propertyTypesFilter}in-${data.state}-${data.region}${bedroomFilter}${priceFilter}`;
+    filters = slugify(filters);
+
+    return `${this.baseUrl}${saleMethod}/${filters}/`;
   }
 
   static getCityUrl(data: ICityData): string {
-    data = CaseChange.slugify<ICityData>(data);
-    const { saleMethodSlug, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
-    return `${this.baseUrl}${saleMethodSlug}/${propertyTypesFilter}in-${data.state}-${data.city}${bedroomFilter}${priceFilter}/`;
+    let { saleMethod, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
+
+    saleMethod = slugify(saleMethod);
+
+    let filters = `${propertyTypesFilter}in-${data.state}-${data.city}${bedroomFilter}${priceFilter}`;
+    filters = slugify(filters);
+
+    return `${this.baseUrl}${saleMethod}/${filters}/`;
   }
 
   static getSuburbUrl(data: ISuburbData): string {
-    data = CaseChange.slugify<ISuburbData>(data);
-    const { saleMethodSlug, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
-    return `${this.baseUrl}${saleMethodSlug}/${propertyTypesFilter}in-${data.state}-${data.suburb}-${data.postalCode}${bedroomFilter}${priceFilter}/`;
+    let { saleMethod, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFiltersUrl(data);
+
+    saleMethod = slugify(saleMethod);
+
+    let filters = `${propertyTypesFilter}in-${data.state}-${data.suburb}-${data.postalCode}${bedroomFilter}${priceFilter}`;
+    filters = slugify(filters);
+
+    return `${this.baseUrl}${saleMethod}/${filters}/`;
   }
 
   private static getFiltersUrl(data: IFiltersData): IFiltersOutput {
-    const saleMethodSlug = this.getSaleMethodUrl(data);
+    const saleMethod = this.getSaleMethodUrl(data);
     const priceFilter = this.getPriceFilterUrl(data);
     const bedroomFilter = this.getBedroomUrl(data);
     const propertyTypesFilter = this.getPropertyTypesUrl(data);
@@ -37,12 +57,13 @@ export class Sale {
       priceFilter,
       bedroomFilter,
       propertyTypesFilter,
-      saleMethodSlug,
+      saleMethod,
     };
   }
 
   static getSaleMethodUrl(data: IFiltersData) {
     let { saleMethod } = data;
+    saleMethod = saleMethod.toLowerCase();
     if (saleMethod === "sale") return "for-sale";
     if (saleMethod === "rent") return "for-rent";
     if (saleMethod === "sold") return "sold-properties";

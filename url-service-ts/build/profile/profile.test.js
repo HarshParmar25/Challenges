@@ -32,7 +32,7 @@ test(`get suburb Url`, () => {
     expect(profile_1.Profile.getSuburbUrl({ state: "vic", suburb: "melbourne", postalCode: 3000 })).toEqual(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-3000/`);
 });
 test(`get city Url`, () => {
-    expect(profile_1.Profile.getCityUrl({ state: "vic", city: "melbourne", cityId: 3000 })).toEqual(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-city-3000/`);
+    expect(profile_1.Profile.getCityUrl({ state: "vic", city: "MelBo/urne", cityId: 3000 })).toEqual(`https://revo.uatz.view.com.au/profile/for-vic/melbo-urne-city-3000/`);
 });
 test(`get region Url`, () => {
     expect(profile_1.Profile.getRegionUrl({ state: "vic", region: "melbourne", regionId: 3000 })).toEqual(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-region-3000/`);

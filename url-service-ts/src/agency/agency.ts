@@ -1,4 +1,4 @@
-import slugify from "../utils/CaseChange";
+/* import slugify from "../utils/slugify";
 
 interface IAgencyUrl {
   agencyName: string;
@@ -20,3 +20,4 @@ export class Agency {
     return `${baseUrl}${agencyName}-${suburb}-${agencyId}/`;
   }
 }
+ */

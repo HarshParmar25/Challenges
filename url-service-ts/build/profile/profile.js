@@ -1,18 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Profile = void 0;
+const slugify_1 = require("../utils/slugify");
 class Profile {
-    static getStateUrl({ state }) {
-        return `${Profile.baseUrl}for-${state}/`;
+    static getStateUrl(data) {
+        let state = `for-${data.state}`;
+        state = (0, slugify_1.slugify)(state);
+        return `${this.baseUrl}${state}/`;
     }
-    static getCityUrl({ state, city, cityId }) {
-        return `${Profile.baseUrl}for-${state}/${city}-city-${cityId}/`;
+    static getCityUrl(data) {
+        let state = `for-${data.state}`;
+        state = (0, slugify_1.slugify)(state);
+        let area = `${data.city}-city-${data.cityId}`;
+        area = (0, slugify_1.slugify)(area);
+        return `${this.baseUrl}${state}/${area}/`;
     }
-    static getRegionUrl({ state, region, regionId }) {
-        return `${Profile.baseUrl}for-${state}/${region}-region-${regionId}/`;
+    static getRegionUrl(data) {
+        let state = `for-${data.state}`;
+        state = (0, slugify_1.slugify)(state);
+        let area = `${data.region}-region-${data.regionId}`;
+        area = (0, slugify_1.slugify)(area);
+        return `${this.baseUrl}${state}/${area}/`;
     }
-    static getSuburbUrl({ state, suburb, postalCode }) {
-        return `${Profile.baseUrl}for-${state}/${suburb}-${postalCode}/`;
+    static getSuburbUrl(data) {
+        let state = `for-${data.state}`;
+        state = (0, slugify_1.slugify)(state);
+        let area = `${data.suburb}-${data.postalCode}`;
+        area = (0, slugify_1.slugify)(area);
+        return `${this.baseUrl}${state}/${area}/`;
     }
     static getStateDataFormUrl(url) {
         const state = url.match(/for-(.*?)\//);

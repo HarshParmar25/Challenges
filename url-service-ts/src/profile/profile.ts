@@ -1,27 +1,42 @@
-import CaseChange from "../utils/CaseChange";
+import { slugify } from "../utils/slugify";
 import { IState, ICity, IRegion, ISuburb } from "./profile.interface";
 
 class Profile {
   private static baseUrl: string = "https://revo.uatz.view.com.au/profile/";
 
   static getStateUrl(data: IState): string {
-    data = CaseChange.slugify<IState>(data);
-    return `${Profile.baseUrl}for-${data.state}/`;
+    let state = `for-${data.state}`;
+    state = slugify(state);
+    return `${this.baseUrl}${state}/`;
   }
 
   static getCityUrl(data: ICity): string {
-    data = CaseChange.slugify<ICity>(data);
-    return `${Profile.baseUrl}for-${data.state}/${data.city}-city-${data.cityId}/`;
+    let state = `for-${data.state}`;
+    state = slugify(state);
+
+    let area = `${data.city}-city-${data.cityId}`;
+    area = slugify(area);
+
+    return `${this.baseUrl}${state}/${area}/`;
   }
 
   static getRegionUrl(data: IRegion): string {
-    data = CaseChange.slugify<IRegion>(data);
-    return `${Profile.baseUrl}for-${data.state}/${data.region}-region-${data.regionId}/`;
+    let state = `for-${data.state}`;
+    state = slugify(state);
+
+    let area = `${data.region}-region-${data.regionId}`;
+    area = slugify(area);
+
+    return `${this.baseUrl}${state}/${area}/`;
   }
 
   static getSuburbUrl(data: ISuburb): string {
-    data = CaseChange.slugify<ISuburb>(data);
-    return `${Profile.baseUrl}for-${data.state}/${data.suburb}-${data.postalCode}/`;
+    let state = `for-${data.state}`;
+    state = slugify(state);
+    let area = `${data.suburb}-${data.postalCode}`;
+    area = slugify(area);
+
+    return `${this.baseUrl}${state}/${area}/`;
   }
 
   static getStateDataFormUrl(url: string): string | void {
