@@ -39,8 +39,8 @@ test(`get suburb Url`, () => {
 });
 
 test(`get city Url`, () => {
-  expect(Profile.getCityUrl({ state: "vic", city: "melbourne", cityId: 3000 })).toEqual(
-    `https://revo.uatz.view.com.au/profile/for-vic/melbourne-city-3000/`
+  expect(Profile.getCityUrl({ state: "vic", city: "MelBo/urne", cityId: 3000 })).toEqual(
+    `https://revo.uatz.view.com.au/profile/for-vic/melbo-urne-city-3000/`
   );
 });
 
