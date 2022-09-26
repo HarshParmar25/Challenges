@@ -74,7 +74,7 @@ class UrlType {
   }
 
   static isRentHomePage(url) {
-    return url.match(/rental-properties\/$/);
+    return url.includes(/rental-properties\/$/);
   }
 
   static isBuyHomePage(url) {

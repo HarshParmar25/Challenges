@@ -20,3 +20,29 @@ class CaseChange {
 }
 
 module.exports = CaseChange;
+
+
+	static decodeQueryParams(queryParams: string): Record<string, string> {
+		if(queryParams[0] === '?') {
+			queryParams = queryParams.slice(1);
+		}
+		queryParams = decodeURIComponent(queryParams);
+		const result: Record<string, string> = {};
+		const params = queryParams.split('&');
+		params.forEach((param) => {
+			const [key, value] = param.split('=');
+			result[key] = value;
+		});
+		return result;
+     	}
+    
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     	static generateQueryParams(data:Record<string,any>):string{
+		const result = Object.keys(data).map((key) => {
+			if (Array.isArray(data[key])) {
+				return data[key].map((item: string) => `${key}=${encodeURI(item)}`).join('&');
+			}
+			return `${key}=${encodeURI(data[key])}`;
+			}).join('&');
+		return `?${result}`
+     	}

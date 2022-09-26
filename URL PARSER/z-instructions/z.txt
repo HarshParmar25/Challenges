@@ -2,3 +2,103 @@
  City :  https://revo.uatz.view.com.au/profile/for-vic/melbourne-city/
  Region: https://revo.uatz.view.com.au/profile/for-vic/melbourne-region/
  Suburb: https://revo.uatz.view.com.au/profile/for-vic/melbourne-3000/ 
+
+
+interface IDataFromUrl {
+  saleMethod: string;
+  state: string;
+  suburb?: string;
+  postalCode?: number;
+  region?: string;
+  city?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  propertyTypes?: string[];
+  bedrooms?: number;
+}
+
+
+
+
+
+  //////////////////////////////////////////////////////////////
+  // data from Url
+  //////////////////////////////////////////////////////////////
+  /*   static getSaleMethod(url: string): string {
+    if (url.includes("sale")) return "sale";
+    if (url.includes("rent")) return "rent";
+    if (url.includes("sold")) return "sold";
+    throw new Error("Invalid sale method");
+  }
+
+  static getArea(url: string): { state: string; region?: string; city?: string; suburb?: string; postalCode?: string } {
+    let state: string, region: string, city: string, suburb: string, postalCode: string;
+    const trimUrl = url.split(/in-|-with-|-from-|-up-to-|-between-/)[1];
+    let result = trimUrl.split("-");
+    result;
+    // result will conatin array of state ,suburb-postalCode or region/city
+    if (result.length > 0) state = result.shift();
+  }
+
+  static getPropertyTypes(url: string) {
+    if (url.indexOf("in-") === 0) return [];
+    return url.match(/.+?(?=-in)/)[0].split("-and-");
+  }
+
+  static getMinPrice(url: string) {
+    const price = url.match(/-from-(.*)/);
+    if (price) return price[1].split("-").slice(0, 1).join("");
+    return "";
+  }
+
+  static getMaxPrice(url: string) {
+    const price = url.match(/-up-to-(.*)/);
+    if (price) return price[1].split("-").slice(0, 1).join("");
+    return "";
+  }
+
+  static getPriceFilter(url: string) {
+    let maxPrice = this.getMaxPrice(url);
+    let minPrice = this.getMinPrice(url);
+    if (maxPrice === "" && minPrice === "") {
+      const price = url.match(/-between-(.*)/);
+      if (price)
+        return {
+          minPrice: parseFloat(price[1].split("-and-")[0]).toString(),
+          maxPrice: parseFloat(price[1].split("-and-")[1]).toString(),
+        };
+      return { minPrice: "", maxPrice: "" };
+    }
+    maxPrice;
+    return { minPrice, maxPrice };
+  }
+
+  static getBedrooms(url: string) {
+    const bedroom = url.match(/-with-(.+?)-/);
+    if (bedroom) return +bedroom[1];
+    return "";
+  }
+
+  static getDataFromUrl(url: string): IDataFromUrl {
+    const data = url.split("/" || "/?").splice(3);
+    let saleMethod = Sale.getSaleMethod(data[0]);
+    let propertyTypes = Sale.getPropertyTypes(data[1]);
+    const bedrooms = Sale.getBedrooms(data[1]);
+    let { minPrice, maxPrice } = Sale.getPriceFilter(data[1]);
+    let { state, postalCode, suburb, region, city } = Sale.getArea(data[1]);
+    if (minPrice) minPrice = parseFloat(minPrice);
+    if (maxPrice) maxPrice = parseFloat(maxPrice);
+
+    return { saleMethod, state, suburb, postalCode, region, city, minPrice, maxPrice, propertyTypes, bedrooms };
+  } */
+
+
+
+
+
+
+// const res = Sale.getDataFromUrl(
+//   `https://www.realestateview.com.au/sold-properties/in-vic-melbourne-with-3-bedrooms-between-50000-and-75000/`
+// );
+// res;
+
