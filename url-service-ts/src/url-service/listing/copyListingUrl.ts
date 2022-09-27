@@ -1,14 +1,16 @@
 import UtilsService from "../../utils/index";
-import { IStateData,
-	IRegionData,
-	ICityData,
-	ISuburbData,
-	IFiltersData,
-	IFiltersOutput,
-	IDataFromUrl,
-	ILocation,
-	IPropertyDetails,
-	IPropertyDetailsFromUrl } from "./listingUrl.interface";
+import {
+  IFilterWithState,
+  IFilterWithRegion,
+  IFilterWithCity,
+  IFilterWithSuburb,
+  IFiltersProperties,
+  IFiltersSlugs,
+  IDataFromUrl,
+  ILocationProperties,
+  IPropertyDetailsWithSuburb,
+  IPropertyDetails,
+} from "./listingUrl.interface";
 
 enum ESaleMethodSlug {
   sale = "for-sale",
@@ -16,7 +18,7 @@ enum ESaleMethodSlug {
   sold = "sold-properties",
 }
 
-abstract class DataFromListingURL {
+abstract class DataFromListingSearchResultURL<T> {
   url: string;
 
   constructor(url: string) {
@@ -31,10 +33,10 @@ abstract class DataFromListingURL {
 
     const result = {
       ...filters,
-      ...locationData
+      ...locationData,
     };
 
-    return UtilsService.removeEmptyValues<ICityData>(result);
+    return UtilsService.removeEmptyValues<T>(result);
   };
 
   private cities = ["Melbourne", "Hobart", "Darwin", "Adelaide", "Perth", "Brisbane", "Canberra"];
@@ -53,7 +55,7 @@ abstract class DataFromListingURL {
     return UtilsService.slugToName(saleMethod);
   }
 
-  protected getLocationData(url: string): ILocation {
+  protected getLocationData(url: string): ILocationProperties {
     const state = this.getStateData(url);
     let region = this.getRegionData(url);
     let city = this.getCityData(url);
@@ -201,23 +203,22 @@ abstract class DataFromListingURL {
   };
 }
 
-
-export class StateDataFromListingURL extends DataFromListingURL {
+class DataFromSearchResultUrlWithState extends DataFromListingSearchResultURL<IFilterWithState> {
   getLocation(url: string) {
     const state = this.getStateData(url);
     return { state };
   }
 }
 
-export class SuburbDataFromListingURL extends DataFromListingURL {
- getLocation(url: string) {
+class DataFromSearchResultUrlWithSuburb extends DataFromListingSearchResultURL<IFilterWithSuburb> {
+  getLocation(url: string) {
     const state = this.getStateData(url);
     const { suburb, postalCode } = this.getSuburbData(url);
     return { state, suburb, postalCode };
   }
 }
 
-export class CityDataFromListingURL extends DataFromListingURL {
+class DataFromSearchResultUrlWithCity extends DataFromListingSearchResultURL<IFilterWithCity> {
   getLocation(url: string) {
     const state = this.getStateData(url);
     const city = this.getCityData(url);
@@ -225,7 +226,7 @@ export class CityDataFromListingURL extends DataFromListingURL {
   }
 }
 
-export class RegionDataFromListingURL extends DataFromListingURL {
+class DataFromSearchResultUrlWithRegion extends DataFromListingSearchResultURL<IFilterWithRegion> {
   getLocation(url: string) {
     const state = this.getStateData(url);
     const region = this.getRegionData(url);
@@ -233,139 +234,138 @@ export class RegionDataFromListingURL extends DataFromListingURL {
   }
 }
 
-export class DataFromAnyListingUrl extends DataFromListingURL {
+class DataFromAnySearchResultUrl extends DataFromListingSearchResultURL<IDataFromUrl> {
   getLocation(url: string) {
-    const data = this.getLocationData(url)
+    const data = this.getLocationData(url);
     return data;
   }
 }
 
-
-abstract class UrlFromListingData{
+abstract class UrlFromListingSearchResultData {
   private baseUrl = `/`;
 
-  data:IDataFromUrl;
+  data: IDataFromUrl;
 
-  constructor(data:IDataFromUrl) {
+  constructor(data: IDataFromUrl) {
     this.data = data;
   }
 
-	getUrl= () => {
-		const { saleMethod, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFilterSlugs(this.data);
+  getUrl = () => {
+    const { saleMethod, priceFilter, bedroomFilter, propertyTypesFilter } = this.getFilterSlugs(this.data);
     const location = this.getLocationSlug(this.data);
-		let filters = `${propertyTypesFilter}in-${location}${bedroomFilter}${priceFilter}`;
-		filters = UtilsService.slugify(filters);
+    let filters = `${propertyTypesFilter}in-${location}${bedroomFilter}${priceFilter}`;
+    filters = UtilsService.slugify(filters);
 
-		return `${this.baseUrl}${saleMethod}/${filters}/`;
-	}                 
+    return `${this.baseUrl}${saleMethod}/${filters}/`;
+  };
 
-  	private getFilterSlugs(data: IFiltersData): IFiltersOutput {
-		const saleMethod = this.getSaleMethodSlug(data);
-		const priceFilter = this.getPriceFilterSlug(data);
-		const bedroomFilter = this.getBedroomSlug(data);
-		const propertyTypesFilter = this.getPropertyTypesSlug(data);
-		return {
-			priceFilter,
-			bedroomFilter,
-			propertyTypesFilter,
-			saleMethod
-		};
-	}
+  private getFilterSlugs(data: IFiltersProperties): IFiltersSlugs {
+    const saleMethod = this.getSaleMethodSlug(data);
+    const priceFilter = this.getPriceFilterSlug(data);
+    const bedroomFilter = this.getBedroomSlug(data);
+    const propertyTypesFilter = this.getPropertyTypesSlug(data);
+    return {
+      priceFilter,
+      bedroomFilter,
+      propertyTypesFilter,
+      saleMethod,
+    };
+  }
 
-	private getSaleMethodSlug(data: IFiltersData) {
-		let { saleMethod } = data;
-		saleMethod = UtilsService.slugify(saleMethod);
-		let saleMethodSlug = '';
+  private getSaleMethodSlug(data: IFiltersProperties) {
+    let { saleMethod } = data;
+    saleMethod = UtilsService.slugify(saleMethod);
+    let saleMethodSlug = "";
 
-		switch (saleMethod) {
-			case 'sale':
-				saleMethodSlug = ESaleMethodSlug.sale;
-				break;
-			case 'rent':
-				saleMethodSlug = ESaleMethodSlug.rent;
-				break;
-			case 'sold':
-				saleMethodSlug = ESaleMethodSlug.sold;
-				break;
-		}
-		return saleMethodSlug;
-	}
+    switch (saleMethod) {
+      case "sale":
+        saleMethodSlug = ESaleMethodSlug.sale;
+        break;
+      case "rent":
+        saleMethodSlug = ESaleMethodSlug.rent;
+        break;
+      case "sold":
+        saleMethodSlug = ESaleMethodSlug.sold;
+        break;
+    }
+    return saleMethodSlug;
+  }
 
-	private getPriceFilterSlug(data: IFiltersData): string {
-		const { saleMethod, minPrice, maxPrice } = data;
-		let priceFilter = '';
-		if (minPrice && maxPrice) {
-			priceFilter = `-between-${minPrice}-and-${maxPrice}`;
-		} else if (minPrice && !maxPrice) {
-			priceFilter = `-from-${minPrice}`;
-		} else if (!minPrice && maxPrice) {
-			priceFilter = `-up-to-${maxPrice}`;
-		}
+  private getPriceFilterSlug(data: IFiltersProperties): string {
+    const { saleMethod, minPrice, maxPrice } = data;
+    let priceFilter = "";
+    if (minPrice && maxPrice) {
+      priceFilter = `-between-${minPrice}-and-${maxPrice}`;
+    } else if (minPrice && !maxPrice) {
+      priceFilter = `-from-${minPrice}`;
+    } else if (!minPrice && maxPrice) {
+      priceFilter = `-up-to-${maxPrice}`;
+    }
 
-		if (saleMethod.toLowerCase() === 'rent' && priceFilter) {
-			return `${priceFilter}-per-week`;
-		}
-		return priceFilter;
-	}
+    if (saleMethod.toLowerCase() === "rent" && priceFilter) {
+      return `${priceFilter}-per-week`;
+    }
+    return priceFilter;
+  }
 
-	private getBedroomSlug(data: IFiltersData): string {
-		const { bedrooms } = data;
-		if (!bedrooms) {
-			return '';
-		}
-		if (bedrooms === 1) {
-			return `-with-${bedrooms}-bedroom`;
-		}
-		if (bedrooms > 1) {
-			return `-with-${bedrooms}-bedrooms`;
-		}
-		return '';
-	}
+  private getBedroomSlug(data: IFiltersProperties): string {
+    const { bedrooms } = data;
+    if (!bedrooms) {
+      return "";
+    }
+    if (bedrooms === 1) {
+      return `-with-${bedrooms}-bedroom`;
+    }
+    if (bedrooms > 1) {
+      return `-with-${bedrooms}-bedrooms`;
+    }
+    return "";
+  }
 
-	private getPropertyTypesSlug(data: IFiltersData): string {
-		const { propertyTypes } = data;
-		if (!propertyTypes || propertyTypes.length === 0) {
-			return '';
-		}
-		const propertyTypesSlug = `${propertyTypes.reduce(
-			(previousType, currentType) => `${previousType}-and-${currentType}`
-		)}-`;
-		return UtilsService.slugify(propertyTypesSlug);
-	}
+  private getPropertyTypesSlug(data: IFiltersProperties): string {
+    const { propertyTypes } = data;
+    if (!propertyTypes || propertyTypes.length === 0) {
+      return "";
+    }
+    const propertyTypesSlug = `${propertyTypes.reduce(
+      (previousType, currentType) => `${previousType}-and-${currentType}`
+    )}-`;
+    return UtilsService.slugify(propertyTypesSlug);
+  }
 
-  abstract getLocationSlug(data:ILocation): string;
+  abstract getLocationSlug(data: ILocationProperties): string;
 }
 
-export class UrlFromSuburbData extends UrlFromListingData {
-  getLocationSlug(data:ISuburbData) {
+class UrlFromSearchResultDataWithSuburb extends UrlFromListingSearchResultData {
+  getLocationSlug(data: IFilterWithSuburb) {
     const { suburb, state, postalCode } = data;
     return `${state}-${suburb}-${postalCode}`;
   }
 }
 
-export class UrlFromCityData extends UrlFromListingData {
-  getLocationSlug(data:ICityData) {
+class UrlFromSearchResultDataWithCity extends UrlFromListingSearchResultData {
+  getLocationSlug(data: IFilterWithCity) {
     const { city, state } = data;
     return `${state}-${city}`;
   }
 }
 
-export class UrlFromRegionData extends UrlFromListingData {
-  getLocationSlug(data:IRegionData) {
+class UrlFromSearchResultDataWithRegion extends UrlFromListingSearchResultData {
+  getLocationSlug(data: IFilterWithRegion) {
     const { region, state } = data;
     return `${state}-${region}`;
   }
 }
 
-export class UrlFromStateData extends UrlFromListingData {
-  getLocationSlug(data:IStateData) {
+class UrlFromSearchResultDataWithState extends UrlFromListingSearchResultData {
+  getLocationSlug(data: IFilterWithState) {
     const { state } = data;
     return `${state}`;
   }
 }
 
-export class UrlFromAnyData extends UrlFromListingData {
-  getLocationSlug(data:ILocation) {
+class UrlFromAnySearchResultData extends UrlFromListingSearchResultData {
+  getLocationSlug(data: ILocationProperties) {
     const { state, city, region, suburb, postalCode } = data;
     if (suburb) {
       return `${state}-${suburb}-${postalCode}`;
@@ -377,5 +377,122 @@ export class UrlFromAnyData extends UrlFromListingData {
       return `${state}-${region}`;
     }
     return `${state}`;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class PropertyDetails {
+  private static baseUrl = `/`;
+  static getPropertyDetailsFromUrl(url: string): IPropertyDetails | boolean {
+    const data = url.split("/" || "/?");
+    if (!data[0]) {
+      data.shift();
+    }
+    const saleMethod = this.getSaleMethodForPropertyDetails(data[1]);
+    const listingId = this.getlistingId(data[1]);
+    const { address, state } = this.getLocationForPropertyDetails(data[0]);
+    if (saleMethod && listingId) {
+      return { saleMethod, listingId, address, state };
+    }
+
+    return false;
+  }
+
+  static getUrlFromPropertyDetails({
+    saleMethod,
+    listingId,
+    address,
+    suburb,
+    state,
+  }: IPropertyDetailsWithSuburb): string {
+    saleMethod = UtilsService.slugify(saleMethod);
+    let propertyTypeUrl = `real-estate/`;
+    if (saleMethod.toLowerCase() === "rent") {
+      propertyTypeUrl = `rental-properties/`;
+    }
+    let slug = `${address}-${suburb}-${state}`;
+    slug = UtilsService.slugify(slug);
+    return `${this.baseUrl}${propertyTypeUrl}${slug}/property-details-${saleMethod}-residential-${listingId}/`;
+  }
+
+  private static getLocationForPropertyDetails(url: string): { address: string; state: string } {
+    let address = url;
+    const stateSlug = url.match(/(\w+)$/g);
+    const state = stateSlug ? stateSlug[0] : "";
+    address = UtilsService.slugToName(address);
+    return { address, state };
+  }
+
+  private static getSaleMethodForPropertyDetails(url: string): string | void {
+    if (url.includes("-buy-")) {
+      return "Buy";
+    }
+    if (url.includes("-rent-")) {
+      return "Rent";
+    }
+    if (url.includes("-sold-")) {
+      return "Sold";
+    }
+  }
+
+  private static getlistingId(url: string): number | void {
+    let listingId: number;
+    const listingIdslug = url.match(/(\d+)/g);
+    if (listingIdslug) {
+      listingId = parseInt(listingIdslug[0]);
+      return listingId;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+export default class Listing {
+  static getDataFromSearchResultUrlWithState(url: string): IFilterWithState {
+    return new DataFromSearchResultUrlWithState(url).getData();
+  }
+
+  static getDataFromSearchResultUrlWithRegion(url: string): IFilterWithRegion {
+    return new DataFromSearchResultUrlWithRegion(url).getData();
+  }
+
+  static getDataFromSearchResultUrlWithCity(url: string): IFilterWithCity {
+    return new DataFromSearchResultUrlWithCity(url).getData();
+  }
+
+  static getDataFromSearchResultUrlWithSuburb(url: string): IFilterWithSuburb {
+    return new DataFromSearchResultUrlWithSuburb(url).getData();
+  }
+
+  static getDataFromAnySearchResultUrl(url: string): ILocationProperties {
+    return new DataFromAnySearchResultUrl(url).getData();
+  }
+
+  static getUrlFromSearchResultDataWithState(data: IFilterWithState): string {
+    return new UrlFromSearchResultDataWithState(data).getUrl();
+  }
+
+  static getUrlFromSearchResultDataWithRegion(data: IFilterWithRegion): string {
+    return new UrlFromSearchResultDataWithRegion(data).getUrl();
+  }
+
+  static getUrlFromSearchResultDataWithCity(data: IFilterWithCity): string {
+    return new UrlFromSearchResultDataWithCity(data).getUrl();
+  }
+
+  static getUrlFromSearchResultDataWithSuburb(data: IFilterWithSuburb): string {
+    return new UrlFromSearchResultDataWithSuburb(data).getUrl();
+  }
+
+  static getUrlFromAnySearchResultData(data: IDataFromUrl): string {
+    return new UrlFromAnySearchResultData(data).getUrl();
+  }
+
+  static getPropertyDetailsFromUrl(url: string): IPropertyDetails | boolean {
+    return PropertyDetails.getPropertyDetailsFromUrl(url);
+  }
+
+  static getUrlFromPropertyDetails(data: IPropertyDetailsWithSuburb): string {
+    return PropertyDetails.getUrlFromPropertyDetails(data);
   }
 }

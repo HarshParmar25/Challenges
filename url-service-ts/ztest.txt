@@ -1,0 +1,52 @@
+enum EPageType {
+	ProfileLandingPage = 'profile-landing-page',
+	StateProfile = 'state-profile-page',
+	CityProfile = 'city-profile-page',
+	RegionProfile = 'region-profile-page',
+	SuburbProfile = 'suburb-profile-page',
+	Agent = 'agent-detail-page',
+	Agency = 'agency-detail-page',
+	Auction = 'auction-page',
+	/*
+	AuctionSearchResultPage
+	AuctionLandingPage
+	FindAgentLandingPage
+
+	 */
+	SoldLanding = 'sold-landing-page',
+	RentLanding = 'rent-landing-page',
+	SoldPropertyDetail = 'sold-property-details',
+	RentPropertyDetail = 'rent-property-details',
+	BuyPropertyDetail = 'buy-property-details',
+	SoldSearchResult = 'sold-search-result-page',
+	RentSearchResult = 'rent-search-result-page',
+	BuySearchResult = 'buy-search-result-page'
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+static decodeQueryParams(queryParams: string): Record<string, string> {
+		if(queryParams[0] === '?') {
+			queryParams = queryParams.slice(1);
+		}
+		queryParams = decodeURIComponent(queryParams);
+		const result: Record<string, string> = {};
+		const params = queryParams.split('&');
+		params.forEach((param) => {
+			const [key, value] = param.split('=');
+			result[key] = value;
+		});
+		return result;
+     	}
+    
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     	static generateQueryParams(data:Record<string,any>):string{
+		const result = Object.keys(data).map((key) => {
+			if (Array.isArray(data[key])) {
+				return data[key].map((item: string) => `${key}=${encodeURI(item)}`).join('&');
+			}
+			return `${key}=${encodeURI(data[key])}`;
+			}).join('&');
+		return `?${result}`
+     	}
