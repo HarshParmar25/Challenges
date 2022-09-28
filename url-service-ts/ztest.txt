@@ -50,3 +50,100 @@ static decodeQueryParams(queryParams: string): Record<string, string> {
 			}).join('&');
 		return `?${result}`
      	}
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+
+
+abstract class ProfileDataFromUrl<T> {
+  url: string;
+
+  constructor(url: string) {
+    this.url = url;
+  }
+
+  getData = (): T | boolean => {
+    const state = ProfileDataFromUrl.getState(this.url);
+    if (!state) {
+      return false;
+    }
+
+    const location = this.getLocation(this.url);
+    return { state, ...location };
+  };
+
+  private static getState(url: string): string | void {
+    const state = url.match(/for-(.*?)\//);
+    if (!state) {
+      return;
+    }
+    return state[1];
+  }
+
+  abstract getLocation(url: string): T;
+}
+
+class ProfileDataFromUrlWithState extends ProfileDataFromUrl<{}> {
+  getLocation = (): {} => {
+    return {};
+  };
+}
+
+class ProfileDataFromUrlWithCity extends ProfileDataFromUrl<ICity> {
+  getLocation = (url: string): ICity => {
+    const city = url.match(/(.*?)\-city\-/);
+    const cityId = url.match(/city\-(.*?)\//);
+    if (!city || !cityId) {
+      return { city: "", cityId: NaN };
+    }
+    return { city: city[1], cityId: Number(cityId[1]) };
+  };
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+buy rent sold
+
+https://www.realestateview.com.au/
+https://www.realestateview.com.au/rental-properties/
+https://www.realestateview.com.au/sold-properties/
+
+https://www.realestateview.com.au/for-sale/in-nsw-richmond-hill-2480/
+https://www.realestateview.com.au/for-rent/in-nsw-richmond-hill-2480/
+https://www.realestateview.com.au/sold-properties/in-nsw-richmond-hill-2480/
+
+https://www.realestateview.com.au/real-estate/21-whispering-valley-drive-richmond-hill-nsw/property-details-buy-residential-14302239/
+https://www.realestateview.com.au/rental-properties/6-sovereign-place-goonellabah-nsw/property-details-rent-residential-14300453/
+https://www.realestateview.com.au/real-estate/15-roder-place-richmond-hill-nsw/property-details-sold-residential-13558973/
+
+Location Profile
+
+https://resi.uatz.view.com.au/profile/
+
+https://resi.uatz.view.com.au/profile/for-act/
+https://resi.uatz.view.com.au/profile/for-qld/cairns-region-92/
+https://resi.uatz.view.com.au/profile/for-qld/cairns-city-92/
+https://resi.uatz.view.com.au/profile/for-qld/cairns-92/
+
+Price Estimator 
+
+https://www.realestateview.com.au/property-360/
+https://www.realestateview.com.au/property-360/property/211-broadwater-avenue-west-maroochydore-qld-4558/
+
+Agent
+https://www.realestateview.com.au/find-agent/
+https://www.realestateview.com.au/agent-profile/vicki-sayers-41300/
+
+
+Agency
+https://www.realestateview.com.au/find-agent/?loc=Melbourne%7CVIC
+https://www.realestateview.com.au/real-estate-agency/rt-edgar-mt-eliza-mount-eliza-26758/
+
+
+Auction
+https://www.realestateview.com.au/sales-and-auction-results/victoria/
+https://www.realestateview.com.au/sales-and-auction-results/in-vic-richmond-3121/
+

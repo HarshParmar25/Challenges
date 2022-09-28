@@ -1,21 +1,29 @@
-interface IStateProfile {
+interface IState {
   state: string;
 }
-interface ICityProfile extends IStateProfile {
+interface ICityProfileWithState extends ICity, IState {}
+
+interface IRegionProfileWithState extends IRegion, IState {}
+
+interface ISuburbProfileWithState extends ISuburb, IState {}
+
+interface ILocationProfile extends Partial<ICity>, Partial<IRegion>, Partial<ISuburb> {
+  state: string;
+}
+
+interface ICity {
   city: string;
   cityId: number;
 }
-interface IRegionProfile extends IStateProfile {
+
+interface IRegion {
   region: string;
   regionId: number;
 }
-interface ISuburbProfile extends IStateProfile {
+
+interface ISuburb {
   suburb: string;
   postalCode: number;
 }
 
-interface ILocationProfile extends Partial<ICityProfile>, Partial<IRegionProfile>, Partial<ISuburbProfile> {
-  state: string;
-}
-
-export { IStateProfile, ICityProfile, IRegionProfile, ISuburbProfile, ILocationProfile };
+export { IState, ICityProfileWithState, IRegionProfileWithState, ISuburbProfileWithState, ILocationProfile };

@@ -1,11 +1,15 @@
 import UtilsService from "../../utils/index";
 import { UrlType } from "../urlType/urlType";
-import { IStateProfile, ICityProfile, IRegionProfile, ISuburbProfile, ILocationProfile } from "./profileUrl.interface";
+import {
+  IState,
+  ICityProfileWithState,
+  IRegionProfileWithState,
+  ISuburbProfileWithState,
+  ILocationProfile,
+} from "./profileUrl.interface";
 
 abstract class ProfileUrlFromData {
-  data: ILocationProfile;
-
-  constructor(data: ILocationProfile) {
+  constructor(public data: ILocationProfile) {
     this.data = data;
   }
 
@@ -28,21 +32,21 @@ class UrlFromProfileDataWithState extends ProfileUrlFromData {
 }
 
 class UrlFromProfileDataWithCity extends ProfileUrlFromData {
-  getLocation = (data: ICityProfile): string => {
+  getLocation = (data: ICityProfileWithState): string => {
     const city = UtilsService.slugify(data.city);
     return `${city}-city-${data.cityId}/`;
   };
 }
 
 class UrlFromProfileDataWithRegion extends ProfileUrlFromData {
-  getLocation = (data: IRegionProfile): string => {
+  getLocation = (data: IRegionProfileWithState): string => {
     const region = UtilsService.slugify(data.region);
     return `${region}-region-${data.regionId}/`;
   };
 }
 
 class UrlFromProfileDataWithSuburb extends ProfileUrlFromData {
-  getLocation = (data: ISuburbProfile): string => {
+  getLocation = (data: ISuburbProfileWithState): string => {
     const suburb = UtilsService.slugify(data.suburb);
     return `${suburb}-${data.postalCode}/`;
   };
@@ -51,11 +55,11 @@ class UrlFromProfileDataWithSuburb extends ProfileUrlFromData {
 class UrlFromProfileData extends ProfileUrlFromData {
   getLocation = (data: ILocationProfile): string => {
     if (data.city && data.cityId) {
-      return new UrlFromProfileDataWithCity(data).getLocation(data as ICityProfile);
+      return new UrlFromProfileDataWithCity(data).getLocation(data as ICityProfileWithState);
     } else if (data.region && data.regionId) {
-      return new UrlFromProfileDataWithRegion(data).getLocation(data as IRegionProfile);
+      return new UrlFromProfileDataWithRegion(data).getLocation(data as IRegionProfileWithState);
     } else if (data.suburb && data.postalCode) {
-      return new UrlFromProfileDataWithSuburb(data).getLocation(data as ISuburbProfile);
+      return new UrlFromProfileDataWithSuburb(data).getLocation(data as ISuburbProfileWithState);
     } else {
       return new UrlFromProfileDataWithState(data).getLocation();
     }
@@ -64,50 +68,10 @@ class UrlFromProfileData extends ProfileUrlFromData {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Profile {
+class ProfileDataFromUrl {
   private static baseUrl = "/profile/";
 
-  static getBaseUrl(): string {
-    return this.baseUrl;
-  }
-
-  static getUrlFromProfileDataWithState(data: IStateProfile): string {
-    let state = `for-${data.state}`;
-    state = UtilsService.slugify(state);
-    return `${this.baseUrl}${state}/`;
-  }
-
-  static getUrlFromProfileDataWithCity(data: ICityProfile): string {
-    let state = `for-${data.state}`;
-    state = UtilsService.slugify(state);
-
-    let location = `${data.city}-city-${data.cityId}`;
-    location = UtilsService.slugify(location);
-
-    return `${this.baseUrl}${state}/${location}/`;
-  }
-
-  static getUrlFromProfileDataWithRegion(data: IRegionProfile): string {
-    let state = `for-${data.state}`;
-    state = UtilsService.slugify(state);
-
-    let location = `${data.region}-region-${data.regionId}`;
-    location = UtilsService.slugify(location);
-
-    return `${this.baseUrl}${state}/${location}/`;
-  }
-
-  static getUrlFromProfileDataWithSuburb(data: ISuburbProfile): string {
-    let state = `for-${data.state}`;
-    state = UtilsService.slugify(state);
-    let location = `${data.suburb}-${data.postalCode}`;
-    location = UtilsService.slugify(location);
-
-    return `${this.baseUrl}${state}/${location}/`;
-  }
-  ////////////////////////////////////////////////////////////////
   private static getState(url: string): string | void {
     const state = url.match(/for-(.*?)\//);
     if (!state) {
@@ -116,18 +80,18 @@ class Profile {
     return state[1];
   }
 
-  static getProfileDataFromUrlWithState(url: string): string | boolean {
+  static getProfileDataFromUrlWithState(url: string): IState | boolean {
     if (!UrlType.isStateProfile(url)) {
       return false;
     }
-    const state = Profile.getState(url);
+    const state = ProfileDataFromUrl.getState(url);
     if (!state) {
       return false;
     }
-    return state;
+    return { state };
   }
 
-  static getProfileDataFromUrlWithCity(url: string): ICityProfile | boolean {
+  static getProfileDataFromUrlWithCity(url: string): ICityProfileWithState | boolean {
     if (!UrlType.isCityProfile(url)) {
       return false;
     }
@@ -135,7 +99,7 @@ class Profile {
     if (!citySlug) {
       return false;
     }
-    const state = Profile.getState(url);
+    const state = ProfileDataFromUrl.getState(url);
     if (!state) {
       return false;
     }
@@ -145,11 +109,11 @@ class Profile {
     return { state, city, cityId };
   }
 
-  static getProfileDataFromUrlWithRegion(url: string): IRegionProfile | boolean {
+  static getProfileDataFromUrlWithRegion(url: string): IRegionProfileWithState | boolean {
     if (!UrlType.isRegionProfile(url)) {
       return false;
     }
-    const state = Profile.getState(url);
+    const state = ProfileDataFromUrl.getState(url);
     if (!state) {
       return false;
     }
@@ -163,11 +127,11 @@ class Profile {
     return { state, region, regionId };
   }
 
-  static getProfileDataFromUrlWithSuburb(url: string): ISuburbProfile | boolean {
+  static getProfileDataFromUrlWithSuburb(url: string): ISuburbProfileWithState | boolean {
     if (!UrlType.isSuburbProfile(url)) {
       return false;
     }
-    const state = Profile.getState(url);
+    const state = ProfileDataFromUrl.getState(url);
     if (!state) {
       return false;
     }
@@ -190,42 +154,62 @@ class Profile {
     }
 
     if (UrlType.isStateProfile(url)) {
-      return Profile.getProfileDataFromUrlWithState(url);
+      return ProfileDataFromUrl.getProfileDataFromUrlWithState(url);
     }
     if (UrlType.isCityProfile(url)) {
-      return Profile.getProfileDataFromUrlWithCity(url);
+      return ProfileDataFromUrl.getProfileDataFromUrlWithCity(url);
     }
     if (UrlType.isRegionProfile(url)) {
-      return Profile.getProfileDataFromUrlWithRegion(url);
+      return ProfileDataFromUrl.getProfileDataFromUrlWithRegion(url);
     }
-    return Profile.getProfileDataFromUrlWithSuburb(url);
+    return ProfileDataFromUrl.getProfileDataFromUrlWithSuburb(url);
   }
 }
 
-export { Profile };
+export { ProfileDataFromUrl as Profile };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export default class LocationProfile {
-  static getUrlFromProfileDataWithState(data: IStateProfile): string {
+  static getUrlFromProfileDataWithState(data: IState): string {
     return new UrlFromProfileDataWithState(data).getUrl();
   }
 
-  static getUrlFromProfileDataWithCity(data: ICityProfile): string {
+  static getUrlFromProfileDataWithCity(data: ICityProfileWithState): string {
     return new UrlFromProfileDataWithCity(data).getUrl();
   }
 
-  static getUrlFromProfileDataWithRegion(data: IRegionProfile): string {
+  static getUrlFromProfileDataWithRegion(data: IRegionProfileWithState): string {
     return new UrlFromProfileDataWithRegion(data).getUrl();
   }
 
-  static getUrlFromProfileDataWithSuburb(data: ISuburbProfile): string {
+  static getUrlFromProfileDataWithSuburb(data: ISuburbProfileWithState): string {
     return new UrlFromProfileDataWithSuburb(data).getUrl();
   }
 
   static getUrlFromProfileData(data: ILocationProfile): string {
     return new UrlFromProfileData(data).getUrl();
+  }
+
+  static getProfileDataFromUrl(url: string): ILocationProfile | boolean {
+    return ProfileDataFromUrl.getProfileDataFromUrl(url);
+  }
+
+  static getProfileDataFromUrlWithState(url: string): IState | boolean {
+    return ProfileDataFromUrl.getProfileDataFromUrlWithState(url);
+  }
+
+  static getProfileDataFromUrlWithCity(url: string): ICityProfileWithState | boolean {
+    return ProfileDataFromUrl.getProfileDataFromUrlWithCity(url);
+  }
+
+  static getProfileDataFromUrlWithRegion(url: string): IRegionProfileWithState | boolean {
+    return ProfileDataFromUrl.getProfileDataFromUrlWithRegion(url);
+  }
+
+  static getProfileDataFromUrlWithSuburb(url: string): ISuburbProfileWithState | boolean {
+    return ProfileDataFromUrl.getProfileDataFromUrlWithSuburb(url);
   }
 }

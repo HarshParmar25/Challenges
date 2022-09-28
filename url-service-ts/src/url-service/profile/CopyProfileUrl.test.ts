@@ -1,14 +1,16 @@
 import LocationProfile from "./CopyProfileUrl";
 
-/* test("get state from Url", () => {
-  const data = LocationProfile.getProfileDataFromUrlWithStat(`https://revo.uatz.view.com.au/profile/for-vic/`);
-  const result = "vic";
+test("get state from Url", () => {
+  const data = LocationProfile.getProfileDataFromUrlWithState(`https://revo.uatz.view.com.au/profile/for-vic/`);
+  const result = { state: "vic" };
 
   expect(data).toEqual(result);
 });
 
 test("get state suburb and postalcode", () => {
-  const data = LocationProfile.getProfileDataFromUrlWithSuburb(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-3000/`);
+  const data = LocationProfile.getProfileDataFromUrlWithSuburb(
+    `https://revo.uatz.view.com.au/profile/for-vic/melbourne-3000/`
+  );
   const result = {
     state: "vic",
     suburb: "Melbourne",
@@ -64,12 +66,12 @@ test("get state and city", () => {
   };
 
   expect(data).toEqual(result);
-}); */
+});
 
-/* describe("Get data from Url", () => {
+describe("Get data from Url", () => {
   test("get state from Url", () => {
     const data = LocationProfile.getProfileDataFromUrl(`https://revo.uatz.view.com.au/profile/for-vic/`);
-    const result = "vic";
+    const result = { state: "vic" };
 
     expect(data).toEqual(result);
   });
@@ -86,7 +88,9 @@ test("get state and city", () => {
   });
 
   test("get state and region", () => {
-    const data = LocationProfile.getProfileDataFromUrl(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-region-1234/`);
+    const data = LocationProfile.getProfileDataFromUrl(
+      `https://revo.uatz.view.com.au/profile/for-vic/melbourne-region-1234/`
+    );
     const result = {
       state: "vic",
       region: "Melbourne",
@@ -97,7 +101,9 @@ test("get state and city", () => {
   });
 
   test("get state and city", () => {
-    const data = LocationProfile.getProfileDataFromUrl(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-city-1234/`);
+    const data = LocationProfile.getProfileDataFromUrl(
+      `https://revo.uatz.view.com.au/profile/for-vic/melbourne-city-1234/`
+    );
     const result = {
       state: "vic",
       city: "Melbourne",
@@ -128,11 +134,9 @@ test("get state and city", () => {
 
     expect(data).toEqual(result);
   });
-}); */
+});
 
-/* describe("unhandled urls", () => {
-
-
+describe("unhandled urls", () => {
   test("shoud return false", () => {
     const data = LocationProfile.getProfileDataFromUrl(`/real-estate-agency/jellis-craig-richmond-13487/`);
     expect(data).toEqual(false);
@@ -190,7 +194,9 @@ test("get state and city", () => {
   });
 
   test("shoud return false", () => {
-    const data = LocationProfile.getProfileDataFromUrlWithState(`/sales-and-auction-results/in-vic-dumbalk%20north-3956/`);
+    const data = LocationProfile.getProfileDataFromUrlWithState(
+      `/sales-and-auction-results/in-vic-dumbalk%20north-3956/`
+    );
     expect(data).toEqual(false);
   });
 
@@ -267,7 +273,6 @@ test("get state and city", () => {
     expect(data).toEqual(false);
   });
 });
- */
 
 describe("Url From Data Location Profile", () => {
   test(`get state Url`, () => {
