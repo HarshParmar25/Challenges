@@ -1,4 +1,4 @@
-import Listing from "./copyListingUrl";
+import Listing from "./ListingUrl";
 
 describe("Get Buy-rent-sold page Data from url", () => {
   test("for-sale/in-vic/", () => {

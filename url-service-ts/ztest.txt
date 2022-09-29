@@ -103,6 +103,104 @@ class ProfileDataFromUrlWithCity extends ProfileDataFromUrl<ICity> {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+/* class ProfileDataFromUrl1 {
+  private static getState(url: string): string | void {
+    const state = url.match(/for-(.*?)\//);
+    if (!state) {
+      return;
+    }
+    return state[1];
+  }
+
+  static getProfileDataFromUrlWithState(url: string): IState | boolean {
+    if (!UrlType.isStateProfile(url)) {
+      return false;
+    }
+    const state = ProfileDataFromUrl1.getState(url);
+    if (!state) {
+      return false;
+    }
+    return { state };
+  }
+
+  static getProfileDataFromUrlWithCity(url: string): ICityProfileWithState | boolean {
+    if (!UrlType.isCityProfile(url)) {
+      return false;
+    }
+    const citySlug = url.match(/for-(.*?)\/(.*)-city-(\d+)\/$/);
+    if (!citySlug) {
+      return false;
+    }
+    const state = ProfileDataFromUrl1.getState(url);
+    if (!state) {
+      return false;
+    }
+    let city = citySlug[2];
+    city = UtilsService.slugToName(city);
+    const cityId = parseInt(citySlug[3]);
+    return { state, city, cityId };
+  }
+
+  static getProfileDataFromUrlWithRegion(url: string): IRegionProfileWithState | boolean {
+    if (!UrlType.isRegionProfile(url)) {
+      return false;
+    }
+    const state = ProfileDataFromUrl1.getState(url);
+    if (!state) {
+      return false;
+    }
+    const regionSlug = url.match(/for-(.*?)\/(.*)-region-(\d+)\/$/);
+    if (!regionSlug) {
+      return false;
+    }
+    let region = regionSlug[2];
+    region = UtilsService.slugToName(region);
+    const regionId = parseInt(regionSlug[3]);
+    return { state, region, regionId };
+  }
+
+  static getProfileDataFromUrlWithSuburb(url: string): ISuburbProfileWithState | boolean {
+    if (!UrlType.isSuburbProfile(url)) {
+      return false;
+    }
+    const state = ProfileDataFromUrl1.getState(url);
+    if (!state) {
+      return false;
+    }
+    const suburbSlug = url.match(/for-(.*?)\/(.*)-(\d+)\/$/);
+    if (!suburbSlug) {
+      return false;
+    }
+    let suburb = suburbSlug[2];
+    suburb = UtilsService.slugToName(suburb);
+    const postalCode = parseInt(suburbSlug[3]);
+    return { state, suburb, postalCode };
+  }
+
+  static getProfileDataFromUrl(url: string) {
+    if (UrlType.isProfileLandingUrl(url)) {
+      return false;
+    }
+    if (UrlType.isProfileLandingUrl(url)) {
+      return false;
+    }
+
+    if (UrlType.isStateProfile(url)) {
+      return ProfileDataFromUrl1.getProfileDataFromUrlWithState(url);
+    }
+    if (UrlType.isCityProfile(url)) {
+      return ProfileDataFromUrl1.getProfileDataFromUrlWithCity(url);
+    }
+    if (UrlType.isRegionProfile(url)) {
+      return ProfileDataFromUrl1.getProfileDataFromUrlWithRegion(url);
+    }
+    return ProfileDataFromUrl1.getProfileDataFromUrlWithSuburb(url);
+  }
+} */
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 buy rent sold

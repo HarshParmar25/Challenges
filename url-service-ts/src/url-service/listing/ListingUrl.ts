@@ -4,7 +4,7 @@ import {
   DataFromSearchResultUrlWithCity,
   DataFromSearchResultUrlWithSuburb,
   DataFromAnySearchResultUrl,
-} from "./DataFromSearchResultUrl";
+} from "./DataFromUrl";
 import {
   IFilterWithState,
   IFilterWithRegion,
@@ -22,7 +22,7 @@ import {
   UrlFromSearchResultDataWithCity,
   UrlFromSearchResultDataWithSuburb,
   UrlFromAnySearchResultData,
-} from "./UrlFromSearchResultData";
+} from "./UrlFromData";
 
 
 

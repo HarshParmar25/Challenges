@@ -1,4 +1,5 @@
-import { UrlType, EPageType } from "./urlType";
+import { UrlType } from "./urlType";
+import { EPageType } from "./types";
 
 describe("UrlType", () => {
   test("should return agency page", () => {
@@ -92,7 +93,7 @@ describe("UrlType", () => {
   });
 
   test("should return undefined", () => {
-    const data = `https://www.realestateview.com.au/`;
+    const data = `https://www.realestateview.com.au/propertsddy-360/property/22-acacia-street-thornlands-qld-4164/`;
     const result = "unknown";
     expect(UrlType.getType(data)).toBe(result);
   });
@@ -106,6 +107,43 @@ describe("UrlType", () => {
   test("region profile page", () => {
     const data = UrlType.getType(`https://revo.uatz.view.com.au/profile/for-vic/melbourne-region-1234/`);
     const result = EPageType.RegionProfile;
+    expect(data).toEqual(result);
+  });
+
+  test("find agent landing page", () => {
+    const data = UrlType.getType(`https://www.realestateview.com.au/find-agent/`);
+    const result = EPageType.FindAgentLanding;
+    expect(data).toEqual(result);
+  });
+
+  test("agency search result page", () => {
+    const data = UrlType.getType(`https://www.realestateview.com.au/find-agent/?loc=Inner%20West%7CVIC`);
+    const result = EPageType.AgencySearchResult;
+    expect(data).toEqual(result);
+  });
+
+  test("auction landign page", () => {
+    const data = UrlType.getType(`https://www.realestateview.com.au/sales-and-auction-results/victoria/`);
+    const result = EPageType.AuctionLanding;
+    expect(data).toEqual(result);
+  });
+
+  test("price Estimator landign page", () => {
+    const data = UrlType.getType(`https://www.realestateview.com.au/property-360/`);
+    const result = EPageType.PriceEstimatorLanding;
+    expect(data).toEqual(result);
+  });
+  test("Price Estimator search result page", () => {
+    const data = UrlType.getType(
+      `https://www.realestateview.com.au/property-360/property/22-acacia-street-thornlands-qld-4164/`
+    );
+    const result = EPageType.PriceEstimatorSearchResult;
+    expect(data).toEqual(result);
+  });
+
+  test("Buy landing page ", () => {
+    const data = UrlType.getType(`https://www.realestateview.com.au/`);
+    const result = EPageType.BuyLanding;
     expect(data).toEqual(result);
   });
 });

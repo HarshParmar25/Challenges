@@ -9,7 +9,7 @@ import {
   IDataFromUrl,
   ILocationProperties,
 } from "./listingUrl.interface";
-import { ESaleMethodSlug } from "./copyListingUrl";
+import { ESaleMethodSlug } from "./ListingUrl";
 
 abstract class UrlFromListingSearchResultData {
   private baseUrl = `/`;

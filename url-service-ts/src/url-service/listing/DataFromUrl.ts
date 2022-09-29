@@ -7,7 +7,7 @@ import {
   IDataFromUrl,
   ILocationProperties,
 } from "./listingUrl.interface";
-import { ESaleMethodSlug } from "./copyListingUrl";
+import { ESaleMethodSlug } from "./ListingUrl";
 
 abstract class DataFromListingSearchResultURL<T> {
   url: string;
@@ -17,6 +17,7 @@ abstract class DataFromListingSearchResultURL<T> {
   }
 
   getData = () => {
+    
     const data = this.removeFirstSlashAndSplitOnSlash(this.url);
     const filters = this.getSalePropertyBedroomAndPriceHelper(data);
 

@@ -1,2 +1,2 @@
-import Listing from "./listing/copyListingUrl";
-import LocationProfile from "./profile/CopyProfileUrl";
+import Listing from "./listing/ListingUrl";
+import LocationProfile from "./profile/ProfileUrl";

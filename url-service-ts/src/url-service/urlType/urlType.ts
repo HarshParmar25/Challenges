@@ -1,31 +1,12 @@
-export enum EPageType {
-  BuyLanding = "buy-landing-page",
-  SoldLanding = "sold-landing-page",
-  RentLanding = "rent-landing-page",
-  SoldSearchResult = "sold-search-result-page",
-  RentSearchResult = "rent-search-result-page",
-  BuySearchResult = "buy-search-result-page",
-  SoldPropertyDetail = "sold-property-details",
-  RentPropertyDetail = "rent-property-details",
-  BuyPropertyDetail = "buy-property-details",
-  ProfileLandingPage = "profile-landing-page",
-  StateProfile = "state-profile-page",
-  CityProfile = "city-profile-page",
-  RegionProfile = "region-profile-page",
-  SuburbProfile = "suburb-profile-page",
-  FindAgentLanding = "find-agent-landing-page",
-  AgentDetail = "agent-detail-page",
-  AgencySearchResult = "agency-search-result-page",
-  AgencyDetail = "agency-detail-page",
-  AuctionLanding = "auction-landing-page",
-  AuctionSearchResult = "auction-search-result-page",
-  PriceEstimatorLanding = "price-estimator-landing-page",
-  PriceEstimatorResult = "price-estimator-result-page",
-}
+import { EPageType } from "./types";
+
 export class UrlType {
   static getType(url: string) {
     let urlType = "";
     switch (true) {
+      case UrlType.isBuyLandingPage(url):
+        urlType = EPageType.BuyLanding;
+        break;
       case UrlType.isRentLandingPage(url):
         urlType = EPageType.RentLanding;
         break;
@@ -50,8 +31,9 @@ export class UrlType {
       case UrlType.isSoldPropertyDetails(url):
         urlType = EPageType.SoldPropertyDetail;
         break;
-
-      ///////////////////////////////////////////
+      case UrlType.isProfileLandingUrl(url):
+        urlType = EPageType.ProfileLandingPage;
+        break;
       case UrlType.isStateProfile(url):
         urlType = EPageType.StateProfile;
         break;
@@ -64,17 +46,29 @@ export class UrlType {
       case UrlType.isSuburbProfile(url):
         urlType = EPageType.SuburbProfile;
         break;
-      case UrlType.isProfileLandingUrl(url):
-        urlType = EPageType.ProfileLandingPage;
+      case UrlType.isFindAgentLanding(url):
+        urlType = EPageType.FindAgentLanding;
         break;
-      case UrlType.isAgentUrl(url):
+      case UrlType.isAgentDetail(url):
         urlType = EPageType.AgentDetail;
         break;
-      case UrlType.isAgencyUrl(url):
+      case UrlType.isAgencySearchResult(url):
+        urlType = EPageType.AgencySearchResult;
+        break;
+      case UrlType.isAgencyDetail(url):
         urlType = EPageType.AgencyDetail;
+        break;
+      case UrlType.isAuctionLanding(url):
+        urlType = EPageType.AuctionLanding;
         break;
       case UrlType.isAuctionSearchResultUrl(url):
         urlType = EPageType.AuctionSearchResult;
+        break;
+      case UrlType.isPriceEstimatorLanding(url):
+        urlType = EPageType.PriceEstimatorLanding;
+        break;
+      case UrlType.isPriceEstimatorSearchResult(url):
+        urlType = EPageType.PriceEstimatorSearchResult;
         break;
       default:
         urlType = "unknown";
@@ -134,7 +128,6 @@ export class UrlType {
     return url.includes("property-details-sold");
   }
 
-  //////////////////////////////////////////////////////
   static isProfileLandingUrl(url: string) {
     if (url.match(/profile\/?$/)) {
       return true;
@@ -175,15 +168,47 @@ export class UrlType {
     return false;
   }
 
+  static isFindAgentLanding(url: string) {
+    if (url.match(/find-agent\/?$/)) {
+      return true;
+    }
+    return false;
+  }
+
+  static isAgentDetail(url: string) {
+    return url.includes("agent-profile");
+  }
+
+  static isAgencySearchResult(url: string) {
+    if (url.match(/find-agent\/\?.*/)) {
+      return true;
+    }
+    return false;
+  }
+
+  static isAgencyDetail(url: string) {
+    return url.includes("real-estate-agency/");
+  }
+
+  static isAuctionLanding(url: string) {
+    return url.includes("sales-and-auction-results/") && !url.includes("sales-and-auction-results/in-");
+  }
+
   static isAuctionSearchResultUrl(url: string) {
     return url.includes("sales-and-auction-results/in-");
   }
 
-  static isAgentUrl(url: string) {
-    return url.includes("agent-profile");
+  static isPriceEstimatorLanding(url: string) {
+    if (url.match(/property-360\/?$/)) {
+      return true;
+    }
+    return false;
   }
 
-  static isAgencyUrl(url: string) {
-    return url.includes("real-estate-agency");
+  static isPriceEstimatorSearchResult(url: string) {
+    if (url.match(/property-360\/property\/\w+/)) {
+      return true;
+    }
+    return false;
   }
 }

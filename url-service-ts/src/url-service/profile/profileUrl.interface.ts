@@ -26,4 +26,4 @@ interface ISuburb {
   postalCode: number;
 }
 
-export { IState, ICityProfileWithState, IRegionProfileWithState, ISuburbProfileWithState, ILocationProfile };
+export { IState, ICityProfileWithState, IRegionProfileWithState, ISuburbProfileWithState, ILocationProfile, ICity, IRegion, ISuburb };

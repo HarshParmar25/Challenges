@@ -1,4 +1,4 @@
-import LocationProfile from "./CopyProfileUrl";
+import LocationProfile from "./ProfileUrl";
 
 test("get state from Url", () => {
   const data = LocationProfile.getProfileDataFromUrlWithState(`https://revo.uatz.view.com.au/profile/for-vic/`);
