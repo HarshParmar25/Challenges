@@ -26,10 +26,10 @@ export class UrlType {
   static getType(url: string) {
     let urlType = "";
     switch (true) {
-      case UrlType.isRentHomePage(url):
+      case UrlType.isRentLandingPage(url):
         urlType = EPageType.RentLanding;
         break;
-      case UrlType.isSoldHomePage(url):
+      case UrlType.isSoldLandingPage(url):
         urlType = EPageType.SoldLanding;
         break;
       case UrlType.isBuySearchResultPage(url):
@@ -83,28 +83,19 @@ export class UrlType {
     return urlType;
   }
 
-
-  static isSoldPropertyDetails(url: string) {
-    return url.includes("property-details-sold");
+  static isBuyLandingPage(url: string) {
+    return url === `https://www.realestateview.com.au/`;
   }
 
-  static isRentPropertyDetails(url: string) {
-    return url.includes("property-details-rent");
-  }
-
-  static isBuyPropertyDetails(url: string) {
-    return url.includes("property-details-buy");
-  }
-
-  static isSoldSearchResultPage(url: string) {
-    if (url.match(/sold-properties\/.*/)) {
+  static isRentLandingPage(url: string) {
+    if (url.match(/rental-properties\/?$/)) {
       return true;
     }
     return false;
   }
 
-  static isRentSearchResultPage(url: string) {
-    if (url.match(/for-rent\/.*/)) {
+  static isSoldLandingPage(url: string) {
+    if (url.match(/sold-properties\/?$/)) {
       return true;
     }
     return false;
@@ -117,20 +108,31 @@ export class UrlType {
     return false;
   }
 
-  static isSoldHomePage(url: string) {
-    if (url.match(/sold-properties\/?$/)) {
+  static isRentSearchResultPage(url: string) {
+    if (url.match(/for-rent\/.*/)) {
       return true;
     }
     return false;
   }
 
-  static isRentHomePage(url: string) {
-    if (url.match(/rental-properties\/?$/)) {
+  static isSoldSearchResultPage(url: string) {
+    if (url.match(/sold-properties\/.*/)) {
       return true;
     }
     return false;
   }
 
+  static isBuyPropertyDetails(url: string) {
+    return url.includes("property-details-buy");
+  }
+
+  static isRentPropertyDetails(url: string) {
+    return url.includes("property-details-rent");
+  }
+
+  static isSoldPropertyDetails(url: string) {
+    return url.includes("property-details-sold");
+  }
 
   //////////////////////////////////////////////////////
   static isProfileLandingUrl(url: string) {
@@ -185,5 +187,3 @@ export class UrlType {
     return url.includes("real-estate-agency");
   }
 }
-
-
