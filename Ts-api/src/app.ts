@@ -5,8 +5,8 @@ import session from "express-session";
 let RedisStore = require("connect-redis")(session);
 
 import { createClient } from "redis";
-let redisClient = createClient({ legacyMode: true });
-redisClient.connect().catch((err) => console.log("error", err));
+// let redisClient = createClient({ legacyMode: true });
+// redisClient.connect().catch((err) => console.log("error", err));
 
 const app = express();
 app.use(helmet());
@@ -18,13 +18,16 @@ app.use(
   session({
     secret: "Keep it secret",
     name: "uniquesessionid",
-    store: new RedisStore({ client: redisClient }),
+    // store: new RedisStore({ client: redisClient }),
     saveUninitialized: false,
     resave: false,
   })
 );
 
 import { indexRouter } from "./modules/index";
+app.use("/test", (req, res) => {
+  res.send("hello");
+});
 app.use("/", indexRouter);
 
 app.listen(3000, () => console.log("listning on port 3000"));

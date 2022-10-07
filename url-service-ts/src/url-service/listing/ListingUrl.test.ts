@@ -1,11 +1,14 @@
 import Listing from "./ListingUrl";
 
 describe("Get Buy-rent-sold page Data from url", () => {
-  test("for-sale/in-vic/", () => {
-    const data = Listing.getDataFromSearchResultUrlWithState(`for-sale/in-vic/`);
+  test("for-sale/in-vic/?name=Harsh", () => {
+    const data = Listing.getDataFromSearchResultUrlWithState(`for-sale/in-vic/?name=Harsh`);
     const result = {
       saleMethod: "Sale",
       state: "vic",
+      queryParams: {
+        name: "Harsh",
+      },
     };
 
     expect(data).toEqual(result);
@@ -13,7 +16,7 @@ describe("Get Buy-rent-sold page Data from url", () => {
 
   test("for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-from-50000/", () => {
     const data = Listing.getDataFromSearchResultUrlWithSuburb(
-      `for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-from-50000/`
+      `for-sale/studios-and-townhouses-and-villas-in-vic-richmond-3121-with-1-bedroom-from-50000/?name=Harsh&age=20`
     );
     const result = {
       saleMethod: "Sale",
@@ -23,6 +26,10 @@ describe("Get Buy-rent-sold page Data from url", () => {
       minPrice: 50000,
       propertyTypes: ["Studios", "Townhouses", "Villas"],
       bedrooms: 1,
+      queryParams: {
+        name: "Harsh",
+        age:'20',
+      },
     };
 
     expect(data).toEqual(result);

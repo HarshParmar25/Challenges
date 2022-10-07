@@ -1,0 +1,26 @@
+version: "3"
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - '/app/node_modules'
+    restart: always
+    
+    depends_on:
+      - mysql_server
+
+  mysql_server:
+    image: mysql:8.0
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      - MYSQL_DATABASE=ticketbooking
+      - MYSQL_USER=harsh
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456

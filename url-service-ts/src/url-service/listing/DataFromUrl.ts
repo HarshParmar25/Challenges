@@ -10,15 +10,14 @@ import {
 import { ESaleMethodSlug } from "./ListingUrl";
 
 abstract class DataFromListingSearchResultURL<T> {
-  url: string;
-
-  constructor(url: string) {
+  constructor(public url: string) {
     this.url = url;
   }
 
   getData = () => {
-    
-    const data = this.removeFirstSlashAndSplitOnSlash(this.url);
+    const [url, queryUrl] = this.url.split("?");
+    const queryParams = UtilsService.decodeQueryParams(queryUrl)
+    const data = this.removeFirstSlashAndSplitOnSlash(url);
     const filters = this.getSalePropertyBedroomAndPriceHelper(data);
 
     const locationData = this.getLocation(data[1]);
@@ -26,6 +25,7 @@ abstract class DataFromListingSearchResultURL<T> {
     const result = {
       ...filters,
       ...locationData,
+      queryParams,
     };
 
     return UtilsService.removeEmptyValues<T>(result);

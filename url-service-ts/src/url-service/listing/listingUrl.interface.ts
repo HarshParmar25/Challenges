@@ -4,6 +4,7 @@ interface IPartialFilterProperties {
   propertyTypes?: string[];
   bedrooms?: number;
   saleMethod: string;
+  queryParam?: Record<string, string> 
 }
 
 interface IFilterWithState extends IPartialFilterProperties {
